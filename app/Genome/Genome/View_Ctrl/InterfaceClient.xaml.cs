@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Genome
+namespace Client.View_Ctrl
 {
     /// <summary>
-    /// Logique d'interaction pour MainWindow.xaml
+    /// Logique d'interaction pour InterfaceClient.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class InterfaceClient : Page
     {
-        public MainWindow()
+        public InterfaceClient()
         {
             InitializeComponent();
         }
