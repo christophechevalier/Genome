@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Client.Tools;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,8 @@ namespace Client.View_Ctrl
         public InterfaceClient()
         {
             InitializeComponent();
+            ConnexionClient client = new ConnexionClient();
+            client.SetInputInterfaceClient(this);
         }
     }
 }
