@@ -16,15 +16,13 @@ using System.Windows.Shapes;
 namespace Serveur.View_Ctrl
 {
     /// <summary>
-    /// Logique d'interaction pour InterfaceServeur.xaml
+    /// Logique d'interaction pour InterfaceCalculateur.xaml
     /// </summary>
-    public partial class InterfaceServeur : Page
+    public partial class InterfaceCalculateur : Page
     {
-        #region Constructeur
-        public InterfaceServeur()
+        public InterfaceCalculateur()
         {
             InitializeComponent();
         }
-        #endregion
     }
 }
