@@ -7,54 +7,72 @@
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
       Title="InterfaceServeur">
-    
-    <Grid x:Name="GrilleParDefaut">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+
+    <Grid Grid.Row="1"
+          Margin="0 5 5 5"
+          Grid.Column="1"
+          Grid.RowSpan="1">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.25*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="0.25*" />
+            <RowDefinition Height="0.50*" />
+            <RowDefinition Height="0.20*" />
+            <RowDefinition Height="0.50*" />
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.20*" />
+            <ColumnDefinition Width="0.40*" />
+            <ColumnDefinition Width="0.20*" />
+            <ColumnDefinition Width="0.40*" />
+            <ColumnDefinition Width="0.20*" />
+        </Grid.ColumnDefinitions>
 
-
-        <Grid Grid.Row="0"
-              Margin="0 5 5 5"
-              Grid.Column="2"
-              Grid.RowSpan="1">
+        <Grid Grid.Row="1" 
+              Grid.Column="0" 
+              VerticalAlignment="Center" 
+              HorizontalAlignment="Center" 
+              Grid.RowSpan="1" 
+              Grid.ColumnSpan="3">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.25*" />
+                <RowDefinition Height="0.5*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="0.5*" />
+                <ColumnDefinition Width="0.5*" />
             </Grid.ColumnDefinitions>
 
-            <Grid Background="OldLace"
-                  Grid.Column="0" 
-                  Grid.Row="1" 
-                  VerticalAlignment="Stretch" 
-                  HorizontalAlignment="Stretch" 
-                  Grid.RowSpan="2" 
-                  Grid.ColumnSpan="2">
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="0.5*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.5*" />
-                </Grid.ColumnDefinitions>
-
-                <Viewbox Margin="15,0,0,0"
-                         Grid.Row="0"
-                         Grid.Column="0" 
-                         HorizontalAlignment="Left" 
-                         VerticalAlignment="Center">
-                    <Label Content="INTERFACE SERVEUR" FontSize="6" />
-                </Viewbox>
-            </Grid>
+            <Viewbox VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <Button x:Name="BtnOuvrirCalculateur"
+                        FontSize="20"
+                        Width="400"
+                        Height="60"
+                        Content="Calculateur" />
+            </Viewbox>
         </Grid>
+
+        <Grid Grid.Row="1" 
+              Grid.Column="2" 
+              VerticalAlignment="Center" 
+              HorizontalAlignment="Center" 
+              Grid.RowSpan="1" 
+              Grid.ColumnSpan="3">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.5*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.5*" />
+                <ColumnDefinition Width="0.5*" />
+            </Grid.ColumnDefinitions>
+
+            <Viewbox VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <Button x:Name="BtnOuvrirOrchestrateur"
+                        FontSize="20"
+                        Width="400"
+                        Height="60"
+                        Content="Orchestrateur" />
+            </Viewbox>
+        </Grid>
+
     </Grid>
 </Page>

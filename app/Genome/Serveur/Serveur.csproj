@@ -52,6 +52,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="View_Ctrl\App.cs" />
+    <Page Include="View_Ctrl\InterfaceCalculateur.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View_Ctrl\InterfaceOrchestrateur.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View_Ctrl\InterfaceServeur.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -62,6 +70,12 @@
     </Page>
     <Compile Include="CAD\CalculateurCAD.cs" />
     <Compile Include="CAD\OrchestrateurCAD.cs" />
+    <Compile Include="View_Ctrl\InterfaceCalculateur.xaml.cs">
+      <DependentUpon>InterfaceCalculateur.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View_Ctrl\InterfaceOrchestrateur.xaml.cs">
+      <DependentUpon>InterfaceOrchestrateur.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View_Ctrl\InterfaceServeur.xaml.cs">
       <DependentUpon>InterfaceServeur.xaml</DependentUpon>
     </Compile>

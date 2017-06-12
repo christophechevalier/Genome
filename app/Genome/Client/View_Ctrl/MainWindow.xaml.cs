@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Client.View_Ctrl;
 
 namespace Client.View_Ctrl
 {
@@ -22,7 +21,7 @@ namespace Client.View_Ctrl
     public partial class MainWindow : Window
     {
         #region Propriétés
-        private View_Ctrl.InterfaceClient ui_client { get; set; }
+        private InterfaceClient interClient { get; set; }
         #endregion
 
         #region Constructeur
@@ -30,10 +29,22 @@ namespace Client.View_Ctrl
         {
             InitializeComponent();
 
-            this.ui_client = new InterfaceClient();
-
-            MainframeClient.Content = ui_client;
+            this.interClient = new InterfaceClient();
+            MainframeClient.Content = interClient;
+            init_Listeners_Client();
         }
+        #endregion
+
+        #region Initinialisation Listeners
+        #region Initialisation Client
+        /// <summary>
+        /// Méthode qui contient l'ensemble des listeners de la vue CLIENT
+        /// </summary>
+        private void init_Listeners_Client()
+        {
+            // Vue Client
+        }
+        #endregion
         #endregion
     }
 }
