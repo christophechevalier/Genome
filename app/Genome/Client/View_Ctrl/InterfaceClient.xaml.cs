@@ -26,6 +26,21 @@ namespace Client.View_Ctrl
             InitializeComponent();
             ConnexionClient client = new ConnexionClient();
             client.SetInputInterfaceClient(this);
+            init_Selection_Traitement();
+        }
+
+        /// <summary>
+        /// Initialisation de la liste du menu
+        /// </summary>
+        private void init_Selection_Traitement()
+        {
+            TitleChoixTraitement.Content = "Traitement - Prédiction - Analyse & Recherche";
+            DataSelect.Text = "-- Choisir un traitement --  ";
+            DataSelect.Items.Add(" Analyse Quantitative sur les génomes ");
+            DataSelect.Items.Add(" Rechercher une séquence donnée dans un génome ");
+            DataSelect.Items.Add(" Transformer les séquences d'ADN vers les acides animés ");
+            DataSelect.Items.Add(" Trouver des gènes ");
+            DataSelect.Items.Add(" Prédir la couleur des yeux ");
         }
     }
 }
