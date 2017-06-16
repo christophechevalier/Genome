@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -14,6 +15,22 @@ namespace Client.Tools
     class ConnexionClient
     {
         // adresse IP de l'orchestrateur
+        private static InterfaceClient interfaceClient;
+        private static readonly object padlock = new object();
+        public static InterfaceClient InterfaceClient
+        {
+            get
+            {
+                lock (padlock)
+                {
+                    if(interfaceClient == null)
+                    {
+                        interfaceClient = new InterfaceClient();
+                    }
+                    return interfaceClient;
+                }
+            }
+        }
         public static string ip;
         public static string message = "Idle";
 
@@ -31,11 +48,35 @@ namespace Client.Tools
         void OpenFile()
         {
             FileDialog fileDialog = new OpenFileDialog();
+            // Limite la selection aux fichiers texte
+            fileDialog.Filter = "txt files (*.txt)|*.txt";
             if (fileDialog.ShowDialog() == true)
             {
                 // retourne si un fichier a bien été selectionné
-                SendFile(fileDialog.FileName, ip);
+                CheckFileIntegrity(fileDialog.FileName);
+                Console.WriteLine("finis");
             }
+        }
+
+        void CheckFileIntegrity(string fileName)
+        {
+            string[] lines = File.ReadAllLines(fileName);
+            for(int i = 1; i != lines.Length -1; i++)
+            {
+                string[] value = lines[i].Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+                char[] letters = value[3].ToCharArray();
+                foreach (char letter in letters)
+                {
+                    if (letter != 'A' && letter != 'C' && letter != 'T' && letter != 'G' && letter != '-' && letter != 'I' && letter != 'D')
+                    {
+                        Console.WriteLine(value[2] + " : " + value[3]);
+                        return;
+                    }
+                    
+                }
+            }
+            Console.WriteLine("Fichier intègre");
+            SendFile(fileName, ip);
         }
 
         void SendFile(string fileName, string address)
@@ -67,7 +108,35 @@ namespace Client.Tools
 
             // Traduit le fichier en tableau de bytes
             byte[] fileNameByte = Encoding.ASCII.GetBytes(fileName);
+            if(fileNameByte.Length > 850 * 1024)
+            {
+                message = "File size is more than 850kb, please try with smaller file";
+                return;
+            }
 
+            // Encode toutes les données en bytes avant l'envois
+            message = "Buffering ...";
+            byte[] fileData = File.ReadAllBytes(filePath + fileName);
+            byte[] clientData = new byte[4 + fileNameByte.Length + fileData.Length];
+            byte[] fileNameLength = BitConverter.GetBytes(fileNameByte.Length);
+
+            // copie les données du client dans les tableaux de bytes avec un index de 4 pour éviter les caractères de racine (c://)
+            fileNameLength.CopyTo(clientData, 0);
+            fileNameByte.CopyTo(clientData, 4);
+            fileData.CopyTo(clientData, 4 + fileNameByte.Length);
+
+            // Connexion au client
+            message = "Connection to server ...";
+            clientSocket.Connect(ipEnd);
+
+            // Envois du fichier au client
+            message = "File Sending ...";
+            clientSocket.Send(clientData);
+
+            // Fermeture de la connexion
+            message = "Disconnecting ...";
+            clientSocket.Close();
+            message = "File transfered";
         }
     }
 }

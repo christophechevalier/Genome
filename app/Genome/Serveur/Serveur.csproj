@@ -51,6 +51,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Tools\ConnexionOrchestrateur.cs" />
     <Compile Include="View_Ctrl\App.cs" />
     <Page Include="View_Ctrl\InterfaceCalculateur.xaml">
       <SubType>Designer</SubType>
