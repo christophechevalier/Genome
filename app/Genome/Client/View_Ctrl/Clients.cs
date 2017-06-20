@@ -8,30 +8,35 @@ namespace Client.View_Ctrl
 {
     class Clients
     {
-        public InterfaceClient interfaceClient;
+        #region Propriétés
+        public InterfaceClient interClient { get; set; }
         public string adresseOrchestrateur;
+        #endregion
 
+        #region Constructeur
         public Clients()
         {
             adresseOrchestrateur = "";
         }
+        #endregion
+
         public void SendFile()
         {
             if(adresseOrchestrateur == "")
             {
-                MessageError("Aucune connecxion à un orchestrateur");
+                MessageError("Aucune connexion à un orchestrateur");
             }
         }
 
         public void SetButtons()
         {
-            interfaceClient.ButtonFile.Click += (sender, args) => { SendFile();};
+            interClient.BtnEnvoiFichier.Click += (sender, args) => { SendFile(); };
         }
 
         public void MessageError(string message)
         {
-            interfaceClient.messagePanel.Visibility = System.Windows.Visibility.Visible;
-            interfaceClient.messagePanel.Content = message;
+            interClient.LabelMessage.Visibility = System.Windows.Visibility.Visible;
+            interClient.LabelMessage.Content = message;
         }
     }
 }
