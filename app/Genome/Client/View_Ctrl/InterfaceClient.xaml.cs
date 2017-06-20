@@ -10,6 +10,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -21,6 +22,10 @@ namespace Client.View_Ctrl
     /// </summary>
     public partial class InterfaceClient : Page
     {
+        /// <summary>
+        /// Constructeur de l'interface cliente
+        /// </summary>
+        #region Constructeur
         public InterfaceClient()
         {
             InitializeComponent();
@@ -28,7 +33,9 @@ namespace Client.View_Ctrl
             client.SetInputInterfaceClient(this);
             init_Selection_Traitement();
         }
+        #endregion
 
+        #region Initialisation Listeners
         /// <summary>
         /// Initialisation de la liste du menu
         /// </summary>
@@ -41,6 +48,26 @@ namespace Client.View_Ctrl
             DataSelect.Items.Add(" Transformer les séquences d'ADN vers les acides animés ");
             DataSelect.Items.Add(" Trouver des gènes ");
             DataSelect.Items.Add(" Prédir la couleur des yeux ");
+        }
+        #endregion
+
+        /// <summary>
+        /// Méthode pour afficher le bandeau déroulant
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            DoubleAnimation da = new DoubleAnimation();
+            da.From = 50;
+            da.To = RenderSize.Width + RenderSize.Height;
+            da.RepeatBehavior = RepeatBehavior.Forever;
+            da.AutoReverse = false;
+            da.Duration = new Duration(TimeSpan.FromSeconds(12));
+
+            LabelMessage.Content = "INFORMATIONS : ''Rien a signalé ! Aucun problème n'a été détecté..'' ";
+            // LabelMessage.Content = something.message;
+            LabelMessage.BeginAnimation(Label.WidthProperty, da);
         }
     }
 }

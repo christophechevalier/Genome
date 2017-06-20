@@ -31,7 +31,7 @@ namespace Client.Tools
                 }
             }
         }
-        public static string ip;
+        public static string ip { get; set; }
         public static string message = "Idle";
 
         // méthode pour définir le clic du bouton envoi Fichier
