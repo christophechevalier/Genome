@@ -10,18 +10,22 @@ namespace Serveur.Tools
 {
     class ConnexionOrchestrateur
     {
+        #region Propriétés
         IPEndPoint end;
         Socket sock;
 
         public static string path;
         public static string message = "Stopped";
+        #endregion
 
+        #region Constructeur
         public ConnexionOrchestrateur()
         {
             end = new IPEndPoint(IPAddress.Any, 2014);
             sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
             sock.Bind(end);
         }
+        #endregion
 
         public void Connexion()
         {
