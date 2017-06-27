@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Management;
+//using System.Management;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -21,35 +21,13 @@ namespace Serveur.View_Ctrl
     /// </summary>
     public partial class InterfaceOrchestrateur : Page
     {
+        private InterfaceCalculateur interCalc { get; set; }
+
         public InterfaceOrchestrateur()
         {
+            this.interCalc = new InterfaceCalculateur();
             InitializeComponent();
-            getNumberOfCores();
-        }
-
-        /// <summary>
-        /// Méthode pour récupérer le nombre de coeurs d'un calculateur
-        /// </summary>
-        private void getNumberOfCores()
-        {
-            int coreCount = 0;
-            SelectQuery query = new SelectQuery("SELECT * FROM Win32_Processor");
-            ManagementObjectSearcher searcher = new ManagementObjectSearcher(query);
-
-            try
-            {
-                foreach (var item in searcher.Get())
-                {
-                    coreCount += int.Parse(item["NumberOfCores"].ToString());
-
-                    Console.WriteLine("Nombre de coeur(s) : {0}", coreCount);
-                    NbCores.Content = coreCount;
-                }
-            }
-            catch (Exception ex)
-            {
-
-            }
+            interCalc.getNumberOfCores();
         }
     }
 }
