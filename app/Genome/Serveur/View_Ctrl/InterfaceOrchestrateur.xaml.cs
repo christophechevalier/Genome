@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 //using System.Management;
 using System.Windows;
@@ -21,13 +22,15 @@ namespace Serveur.View_Ctrl
     /// </summary>
     public partial class InterfaceOrchestrateur : Page
     {
-        private InterfaceCalculateur interCalc { get; set; }
+        private SocketListenerAsynchrone listener;
 
         public InterfaceOrchestrateur()
         {
-            this.interCalc = new InterfaceCalculateur();
             InitializeComponent();
-            interCalc.getNumberOfCores();
+
+            listener = new SocketListenerAsynchrone();
+            Thread ecoute = new Thread(new ThreadStart(listener.StartListening));
+            ecoute.Start();
         }
     }
 }
