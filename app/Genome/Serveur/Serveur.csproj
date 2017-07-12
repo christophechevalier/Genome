@@ -53,6 +53,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entity\Calculateur.cs" />
     <Compile Include="Model\GenesMapper.cs" />
     <Compile Include="Tools\ConnexionOrchestrateur.cs" />
     <Compile Include="View_Ctrl\App.cs" />
