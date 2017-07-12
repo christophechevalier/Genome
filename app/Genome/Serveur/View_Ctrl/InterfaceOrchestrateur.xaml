@@ -14,7 +14,7 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.10*" />
+            <RowDefinition Height="0.1*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="0.1*" />
         </Grid.RowDefinitions>
@@ -35,6 +35,44 @@
                 <Label Content="Orchestrateur" FontSize="4" />
             </Viewbox>
         </Grid>
+
+        <Grid Grid.Row="1" 
+              VerticalAlignment="Stretch" 
+              HorizontalAlignment="Stretch">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <DataGrid x:Name="MyDataGrid"
+                      Grid.Row="1"
+                      Grid.Column="0"
+                      Height="450"
+                      MinHeight="350"
+                      Width="900"
+                      MinWidth="600"
+                      Background="LightGray" 
+                      RowBackground="LightYellow"
+                      AlternatingRowBackground="LightBlue"
+                      BorderBrush="Gray" 
+                      BorderThickness="5"
+                      GridLinesVisibility="Vertical" 
+                      HeadersVisibility="All"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch" 
+                      IsReadOnly="True"
+                      AreRowDetailsFrozen="True"
+                      CanUserReorderColumns="False"
+                      HorizontalScrollBarVisibility="Visible"
+                      VerticalScrollBarVisibility="Visible"
+                      SelectionMode="Extended"
+                      RowHeight="30" 
+                      ColumnWidth="110" />
+        </Grid>
+
 
         <Grid Grid.Row="2"
               Grid.Column="2"
