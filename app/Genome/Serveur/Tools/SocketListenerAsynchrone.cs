@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Serveur.Tools;
+using System;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
@@ -18,11 +20,19 @@ namespace Serveur.View_Ctrl
 
             // Créé l'IPEndPoint pour le socket avec l'adresse de ce poste sur le port 80
             IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostAddresses(Dns.GetHostName())[0]);
-            IPAddress ipAddress = ipHostInfo.AddressList[0];
+            GetLocalAddress address = new GetLocalAddress();
+            IPAddress ipAddress;
+            if (IPAddress.TryParse(address.GetAddress(), out ipAddress)) { }
+            else
+            {
+                // Quitte la méthode sinon
+                return;
+            }
+            
             IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 80);
 
             // Créé le socket TCP/IP
-            Socket listener = new Socket(AddressFamily.InterNetworkV6, SocketType.Stream, ProtocolType.Tcp);
+            Socket listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
             // Charge le socket avec l'IPEndPoint et écoute les connexions
             try
@@ -53,6 +63,7 @@ namespace Serveur.View_Ctrl
             Console.Read();
 
         }
+
 
         public void AcceptCallback(IAsyncResult ar)
         {

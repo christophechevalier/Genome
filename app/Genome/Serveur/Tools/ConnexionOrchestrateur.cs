@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Serveur.Entity;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -13,6 +15,7 @@ namespace Serveur.Tools
         #region Propriétés
         IPEndPoint end;
         Socket sock;
+        public List<Calculateur> listeCalculateur;
 
         public static string path;
         public static string message = "Stopped";
@@ -24,23 +27,59 @@ namespace Serveur.Tools
             end = new IPEndPoint(IPAddress.Any, 2014);
             sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
             sock.Bind(end);
+            Task taskReceiveFile = Task.Run(() => ReceiveFile());
         }
         #endregion
 
-        public void Connexion()
+        public void StartServer()
         {
-            while (true)
-            {
                 try
                 {
                     IPEndPoint endPoint = new IPEndPoint(IPAddress.Any, 2017);
                     Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
                     socket.Bind(endPoint);
-
+                    Console.WriteLine("start server");
                 }
-                catch
+                catch(Exception e)
                 {
+                    Console.WriteLine("ERROR : " + e);
+                }
+        }
 
+        public int NombreServeurDisponible()
+        {
+            int number = 0;
+            foreach (Calculateur calc in listeCalculateur)
+            {
+                if (calc.Status.Equals("OK"))
+                {
+                    number++;
+                }
+            }
+            return number;
+        }
+
+        public void ReceiveFile()
+        {
+            StartServer();
+            while (true)
+            {
+                try
+                {
+                    sock.Listen(100);
+                    Socket client = sock.Accept();
+                    byte[] clientData = new byte[1024 * 5000];
+                    int receiveByteLength = client.Receive(clientData);
+                    int fileNameLength = BitConverter.ToInt32(clientData, 0);
+                    string fileName = Encoding.ASCII.GetString(clientData, 4, fileNameLength);
+                    BinaryWriter writer = new BinaryWriter(File.Open(Directory.GetCurrentDirectory() + "/" + fileName, FileMode.Append));
+                    writer.Write(clientData, 4 + fileNameLength, receiveByteLength - 4 - fileNameLength);
+                    writer.Close();
+                    Console.WriteLine("File Sent");
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine("ERROR : " + e);
                 }
             }
         }
@@ -60,8 +99,6 @@ namespace Serveur.Tools
 
                 // Création du socket TCP/IP
                 Socket sock = new Socket(AddressFamily.InterNetworkV6, SocketType.Stream, ProtocolType.Tcp);
-
-                Console.WriteLine("Passage 1");
                 // Connection du socket à l'IPEndPoint avec récupération des exceptions
                 try
                 {

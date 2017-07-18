@@ -1,4 +1,5 @@
 ﻿using Serveur.Entity;
+using Serveur.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,7 @@ namespace Serveur.View_Ctrl
         public InterfaceOrchestrateur()
         {
             InitializeComponent();
+            ConnexionOrchestrateur connexionOrchestrateur = new ConnexionOrchestrateur();
             MyDataGrid.ItemsSource = loadCollectionData();
             listener = new SocketListenerAsynchrone();
             Thread ecoute = new Thread(new ThreadStart(listener.StartListening));
