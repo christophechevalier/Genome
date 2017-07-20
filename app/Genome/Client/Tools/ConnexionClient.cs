@@ -31,7 +31,7 @@ namespace Client.Tools
                 }
             }
         }
-        public static string ip { get; set; }
+        public static string ip = "127.0.0.1";
         public static string message = "Idle";
 
         // méthode pour définir le clic du bouton envoi Fichier
@@ -60,21 +60,21 @@ namespace Client.Tools
 
         void CheckFileIntegrity(string fileName)
         {
-            string[] lines = File.ReadAllLines(fileName);
-            for(int i = 1; i != lines.Length -1; i++)
-            {
-                string[] value = lines[i].Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
-                char[] letters = value[3].ToCharArray();
-                foreach (char letter in letters)
-                {
-                    if (letter != 'A' && letter != 'C' && letter != 'T' && letter != 'G' && letter != '-' && letter != 'I' && letter != 'D')
-                    {
-                        Console.WriteLine(value[2] + " : " + value[3]);
-                        return;
-                    }
+            //string[] lines = File.ReadAllLines(fileName);
+            //for(int i = 1; i != lines.Length -1; i++)
+            //{
+            //    string[] value = lines[i].Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+            //    char[] letters = value[3].ToCharArray();
+            //    foreach (char letter in letters)
+            //    {
+            //        if (letter != 'A' && letter != 'C' && letter != 'T' && letter != 'G' && letter != '-' && letter != 'I' && letter != 'D')
+            //        {
+            //            Console.WriteLine(value[2] + " : " + value[3]);
+            //            return;
+            //        }
                     
-                }
-            }
+            //    }
+            //}
             Console.WriteLine("Fichier intègre");
             SendFile(fileName, ip);
         }
