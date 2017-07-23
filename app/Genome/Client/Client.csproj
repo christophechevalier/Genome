@@ -97,7 +97,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Serveur\Serveur.csproj">
+      <Project>{41046c55-33d2-4096-8cf8-1d6a648c1cd3}</Project>
+      <Name>Serveur</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Model\Model.txt" />
   </ItemGroup>
