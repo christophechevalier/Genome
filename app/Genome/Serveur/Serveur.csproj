@@ -55,10 +55,14 @@
   <ItemGroup>
     <Compile Include="Applicatifs\RepertoireTraitement.cs" />
     <Compile Include="Entity\Calculateur.cs" />
+    <Compile Include="Framework\IMessageTraitement.cs" />
+    <Compile Include="Framework\IReducer.cs" />
     <Compile Include="Model\GenesMapper.cs" />
     <Compile Include="Tools\ConnexionOrchestrateur.cs" />
     <Compile Include="Tools\GetLocalAddress.cs" />
     <Compile Include="Tools\ThreadManager.cs" />
+    <Compile Include="Tools\MapReducer.cs" />
+    <Compile Include="Tools\MessageTreatment.cs" />
     <Compile Include="View_Ctrl\App.cs" />
     <Compile Include="Tools\SocketListenerAsynchrone.cs" />
     <Compile Include="Tools\StateObject.cs" />

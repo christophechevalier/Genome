@@ -61,7 +61,7 @@ namespace Client.Tools
         void CheckFileIntegrity(string fileName)
         {
             //string[] lines = File.ReadAllLines(fileName);
-            //for(int i = 1; i != lines.Length -1; i++)
+            //for (int i = 1; i != lines.Length - 1; i++)
             //{
             //    string[] value = lines[i].Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
             //    char[] letters = value[3].ToCharArray();
@@ -72,7 +72,7 @@ namespace Client.Tools
             //            Console.WriteLine(value[2] + " : " + value[3]);
             //            return;
             //        }
-                    
+
             //    }
             //}
             Console.WriteLine("Fichier intègre");
