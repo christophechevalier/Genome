@@ -1,4 +1,4 @@
-﻿using Serveur.Framework;
+using Serveur.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;

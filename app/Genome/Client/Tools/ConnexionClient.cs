@@ -42,7 +42,6 @@ namespace Client.Tools
             interfaceClient = client;
             client.BtnEnvoiFichier.Click += new RoutedEventHandler(delegate 
             {
-                
                 OpenFile();
             });
         }

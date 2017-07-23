@@ -20,7 +20,6 @@ namespace Serveur.Tools
         Socket sock;
         public static string path;
         public static string message = "Stopped";
-
         public ObservableCollection<Calculateur> listeCalculateurs;
         public OrchestrateurCAD orchCad;
         public InterfaceOrchestrateur orchestrateur;
@@ -34,9 +33,8 @@ namespace Serveur.Tools
             sock.Bind(end);
             Task taskReceiveFile = Task.Run(() => ReceiveFile());
         }
-        #endregion
 
-        public void SetInputInterfaceOrchestrateur(InterfaceOrchestrateur orchestrateur) 
+        public void SetInputInterfaceOrchestrateur(InterfaceOrchestrateur orchestrateur)
         {
             this.orchestrateur = orchestrateur;
         }
@@ -46,6 +44,10 @@ namespace Serveur.Tools
             this.orchCad = orchCAD;
             this.orchCad.Calculateurs = this.listeCalculateurs;
         }
+        #endregion
+
+
+
 
         public void AddCalculateurList(string ip)
         {
@@ -144,7 +146,7 @@ namespace Serveur.Tools
                     writer.Close();
                     Console.WriteLine("File Received");
                     // Création de l'objet MapReducer avec comme paramètre le fichier reçu et l'Id du chunk demandé
-                    MapReducer reducer = new MapReducer(fileName, 1);
+                    MapReducer reducer = new MapReducer(fileName, 1, this);
                     // Récupération du chunk demandé sous forme de liste
                     List<string> chunk = reducer.CreateChunk();
                 }

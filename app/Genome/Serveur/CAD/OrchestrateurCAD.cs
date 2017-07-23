@@ -32,10 +32,7 @@ namespace Serveur.CAD
         #region Events
         private void Calculateurs_CollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs("Calculateurs"));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Calculateurs"));
         }
         public event PropertyChangedEventHandler PropertyChanged;
         #endregion

@@ -9,6 +9,7 @@ namespace Serveur.Entity
 {
     public class Calculateur
     {
+
         private string _ip;
         public string IP
         {

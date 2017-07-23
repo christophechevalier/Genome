@@ -10,12 +10,14 @@ namespace Serveur.Tools
 {
     class MapReducer : IReducer
     {
+        public ConnexionOrchestrateur connexionOrchestrateur;
         string file;
         int chunkNumber;
-        public MapReducer(string file, int chunkNumber)
+        public MapReducer(string file, int chunkNumber, ConnexionOrchestrateur connexionOrchestrateur)
         {
             this.file = file;
             this.chunkNumber = chunkNumber;
+            this.connexionOrchestrateur = connexionOrchestrateur;
         }
 
         public List<string> CreateChunk()

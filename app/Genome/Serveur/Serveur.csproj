@@ -69,6 +69,7 @@
     <Compile Include="Tools\ConnexionOrchestrateur.cs" />
     <Compile Include="Tools\GetLocalAddress.cs" />
     <Compile Include="Tools\ThreadManager.cs" />
+    <Compile Include="Tools\Connexion.cs" />
     <Compile Include="Tools\MapReducer.cs" />
     <Compile Include="Tools\Message.cs" />
     <Compile Include="Tools\MessageTreatment.cs" />
