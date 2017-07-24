@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Serveur.Entity
 {
+    [Serializable]
     public class FileData
     {
         public int Id { get; set; }

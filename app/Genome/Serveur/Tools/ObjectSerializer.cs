@@ -22,7 +22,7 @@ namespace Serveur.Tools
             return ms.ToArray();
         }
 
-        private Object Deserialize<T>(byte[] arrBytes)
+        public Object Deserialize<T>(byte[] arrBytes)
         {
             MemoryStream memStream = new MemoryStream();
             BinaryFormatter binForm = new BinaryFormatter();

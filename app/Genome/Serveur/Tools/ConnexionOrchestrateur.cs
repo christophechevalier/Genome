@@ -66,13 +66,18 @@ namespace Serveur.Tools
             {
                 try
                 {
+                    ObjectSerializer serializer = new ObjectSerializer();
+                    FileData file = new FileData();
                     sock.Listen(100);
                     Socket client = sock.Accept();
                     byte[] clientData = new byte[1024 * 25000];
                     int receiveByteLength = client.Receive(clientData);
-                    int fileNameLength = BitConverter.ToInt32(clientData, 0);
-                    string fileName = Encoding.ASCII.GetString(clientData, 4, fileNameLength);
-                    BinaryWriter writer = new BinaryWriter(File.Open(Directory.GetCurrentDirectory() + "/" + fileName, FileMode.Append));
+                    file = serializer.Deserialize<FileData>(clientData) as FileData;
+
+                    int fileNameLength = BitConverter.ToInt32(file.Content, 0);
+                    string fileName = Encoding.ASCII.GetString(file.Content, 4, fileNameLength);
+
+                    BinaryWriter writer = new BinaryWriter(File.Open(Directory.GetCurrentDirectory() + "/" + file.FileName, FileMode.Append));
                     writer.Write(clientData, 4 + fileNameLength, receiveByteLength - 4 - fileNameLength);
                     writer.Close();
                     Console.WriteLine("File Received");

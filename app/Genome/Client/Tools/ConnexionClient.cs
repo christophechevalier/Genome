@@ -62,21 +62,21 @@ namespace Client.Tools
 
         void CheckFileIntegrity(string fileName)
         {
-            string[] lines = File.ReadAllLines(fileName);
-            for (int i = 1; i != lines.Length - 1; i++)
-            {
-                string[] value = lines[i].Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
-                char[] letters = value[3].ToCharArray();
-                foreach (char letter in letters)
-                {
-                    if (letter != 'A' && letter != 'C' && letter != 'T' && letter != 'G' && letter != '-' && letter != 'I' && letter != 'D')
-                    {
-                        Console.WriteLine(value[2] + " : " + value[3]);
-                        return;
-                    }
+            //string[] lines = File.ReadAllLines(fileName);
+            //for (int i = 1; i != lines.Length - 1; i++)
+            //{
+            //    string[] value = lines[i].Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+            //    char[] letters = value[3].ToCharArray();
+            //    foreach (char letter in letters)
+            //    {
+            //        if (letter != 'A' && letter != 'C' && letter != 'T' && letter != 'G' && letter != '-' && letter != 'I' && letter != 'D')
+            //        {
+            //            Console.WriteLine(value[2] + " : " + value[3]);
+            //            return;
+            //        }
 
-                }
-            }
+            //    }
+            //}
             Console.WriteLine("Fichier intègre");
             SendFile(fileName, ip);
         }
@@ -86,7 +86,7 @@ namespace Client.Tools
             IPAddress ip;
             FileData file = new FileData();
             file.FileSize = GetFileSize(fileName);
-            file.Id = Int32.Parse(DateTime.Now.Ticks.ToString());
+            //file.Id = Int32.Parse(DateTime.Now.Ticks.ToString());
             file.FileName = GetFileName(fileName);
             // check si le string adresse est bien au format IPV4
             if (IPAddress.TryParse(address, out ip)) { }
