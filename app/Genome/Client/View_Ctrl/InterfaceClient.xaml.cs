@@ -48,7 +48,7 @@ namespace Client.View_Ctrl
             DataSelect.Items.Add(" Rechercher une séquence donnée dans un génome ");
             DataSelect.Items.Add(" Transformer les séquences d'ADN vers les acides animés ");
             DataSelect.Items.Add(" Trouver des gènes ");
-            DataSelect.Items.Add(" Prédir la couleur des yeux ");
+            DataSelect.Items.Add(" Prédire la couleur des yeux ");
         }
         #endregion
 

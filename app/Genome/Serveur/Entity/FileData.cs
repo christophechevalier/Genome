@@ -9,9 +9,10 @@ namespace Serveur.Entity
     [Serializable]
     public class FileData
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string FileName { get; set; }
         public float FileSize { get; set; }
         public byte[] Content { get; set; }
+        public string Job { get; set; }
     }
 }

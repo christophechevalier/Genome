@@ -31,21 +31,26 @@ namespace Serveur.Tools
         }
         #endregion
 
+        // Méthode de démarrage du serveur
         public void StartServer()
         {
-                try
-                {
-                    IPEndPoint endPoint = new IPEndPoint(IPAddress.Any, 2017);
-                    Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
-                    socket.Bind(endPoint);
-                    Console.WriteLine("start server");
-                }
-                catch(Exception e)
-                {
-                    Console.WriteLine("ERROR : " + e);
-                }
+            try
+            {
+                // Création de l'endpoint et du port d'écoute
+                IPEndPoint endPoint = new IPEndPoint(IPAddress.Any, 2017);
+                // Création du socket internetwork
+                Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
+                // Binding de l'endpoint
+                socket.Bind(endPoint);
+                Console.WriteLine("start server");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("ERROR : " + e);
+            }
         }
 
+        // Méthode retournant le nombre de serveur disponible
         public int NombreServeurDisponible()
         {
             int number = 0;
@@ -59,29 +64,43 @@ namespace Serveur.Tools
             return number;
         }
 
+        // méthode pour recevoir un fichier envoyé par un client
         public void ReceiveFile()
         {
+            // Démarrage du serveur
             StartServer();
             while (true)
             {
                 try
                 {
+                    // Création de l'objet serialiseur
                     ObjectSerializer serializer = new ObjectSerializer();
+                    // Création de l'objet de récupération du fichier
                     FileData file = new FileData();
+                    // Ecoute du socket avec une limite de 100
                     sock.Listen(100);
+                    // Acceptation des client par le socket
                     Socket client = sock.Accept();
+                    // Création d'un nouveau tableau de stockage des données en bytes avec comme limite 25Mo
                     byte[] clientData = new byte[1024 * 25000];
+                    // Réception des données
                     int receiveByteLength = client.Receive(clientData);
+                    // Déserialisation des données et convertion en tyoe FileData
                     file = serializer.Deserialize<FileData>(clientData) as FileData;
-
+                    // Récupération de la taille du fichier
                     int fileNameLength = BitConverter.ToInt32(file.Content, 0);
+                    // Récupération du nom du fichier
                     string fileName = Encoding.ASCII.GetString(file.Content, 4, fileNameLength);
-
+                    // Ecriture du fichier à la racine de l'executable du serveur
                     BinaryWriter writer = new BinaryWriter(File.Open(Directory.GetCurrentDirectory() + "/" + file.FileName, FileMode.Append));
+                    // Démarrage de l'écriture et de la sauvegarde du fichier
                     writer.Write(clientData, 4 + fileNameLength, receiveByteLength - 4 - fileNameLength);
+                    // Fermeture de l'écriture
                     writer.Close();
                     Console.WriteLine("File Received");
+                    // Création de l'objet MapReducer avec comme paramètre le fichier reçu et l'Id du chunk demandé
                     MapReducer reducer = new MapReducer(fileName, 1);
+                    // Récupération du chunk demandé sous forme de liste
                     List<string> chunk = reducer.CreateChunk();
                 }
                 catch(Exception e)
@@ -91,6 +110,7 @@ namespace Serveur.Tools
             }
         }
 
+        // Méthode pour envoyer un message 
         public void envoiMessage(string message)
         {
             // Tableau de Byte pour la réception de données

@@ -39,9 +39,10 @@ namespace Client.Tools
         // méthode pour définir le clic du bouton envoi Fichier
         public void SetInputInterfaceClient(InterfaceClient client)
         {
+            interfaceClient = client;
             client.BtnEnvoiFichier.Click += new RoutedEventHandler(delegate 
             {
-                // Appel de la méthode OpenFile au clic 
+                
                 OpenFile();
             });
         }
@@ -86,8 +87,9 @@ namespace Client.Tools
             IPAddress ip;
             FileData file = new FileData();
             file.FileSize = GetFileSize(fileName);
-            //file.Id = Int32.Parse(DateTime.Now.Ticks.ToString());
+            file.Id = int.Parse(DateTime.Now.Ticks.ToString());
             file.FileName = GetFileName(fileName);
+            file.Job = DetermineJob();
             // check si le string adresse est bien au format IPV4
             if (IPAddress.TryParse(address, out ip)) { }
             else
@@ -152,6 +154,30 @@ namespace Client.Tools
             return value;
         }
 
+        string DetermineJob()
+        {
+            string job = "";
+            switch (interfaceClient.DataSelect.SelectedIndex)
+            {
+                case 0:
+                    job = Job.AnalyseQuantitative.ToString();
+                    break;
+                case 1:
+                    job = Job.RechercherSequence.ToString();
+                    break;
+                case 2:
+                    job = Job.TransformerSequence.ToString();
+                    break;
+                case 3:
+                    job = Job.TrouverGene.ToString();
+                    break;
+                case 4:
+                    job = Job.PredireYeux.ToString();
+                    break;
+            }
+            return job;
+        }
+
         string GetFileName(string fileName)
         {
             string name = "";
@@ -161,4 +187,13 @@ namespace Client.Tools
             return name;
         }
     }
+
+    enum Job
+    {
+        AnalyseQuantitative,
+        RechercherSequence,
+        TransformerSequence,
+        TrouverGene,
+        PredireYeux,
+    };
 }
