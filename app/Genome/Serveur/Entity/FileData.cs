@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serveur.Tools;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,6 @@ namespace Serveur.Entity
         public string FileName { get; set; }
         public float FileSize { get; set; }
         public byte[] Content { get; set; }
-        public string Job { get; set; }
+        public Job Job;
     }
 }

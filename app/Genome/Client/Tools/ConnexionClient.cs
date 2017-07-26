@@ -63,21 +63,21 @@ namespace Client.Tools
 
         void CheckFileIntegrity(string fileName)
         {
-            //string[] lines = File.ReadAllLines(fileName);
-            //for (int i = 1; i != lines.Length - 1; i++)
-            //{
-            //    string[] value = lines[i].Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
-            //    char[] letters = value[3].ToCharArray();
-            //    foreach (char letter in letters)
-            //    {
-            //        if (letter != 'A' && letter != 'C' && letter != 'T' && letter != 'G' && letter != '-' && letter != 'I' && letter != 'D')
-            //        {
-            //            Console.WriteLine(value[2] + " : " + value[3]);
-            //            return;
-            //        }
+            string[] lines = File.ReadAllLines(fileName);
+            for (int i = 1; i != lines.Length - 1; i++)
+            {
+                string[] value = lines[i].Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+                char[] letters = value[3].ToCharArray();
+                foreach (char letter in letters)
+                {
+                    if (letter != 'A' && letter != 'C' && letter != 'T' && letter != 'G' && letter != '-' && letter != 'I' && letter != 'D')
+                    {
+                        Console.WriteLine(value[2] + " : " + value[3]);
+                        return;
+                    }
 
-            //    }
-            //}
+                }
+            }
             Console.WriteLine("Fichier intègre");
             SendFile(fileName, ip);
         }
@@ -154,25 +154,25 @@ namespace Client.Tools
             return value;
         }
 
-        string DetermineJob()
+        Job DetermineJob()
         {
-            string job = "";
+            Job job = new Job();
             switch (interfaceClient.DataSelect.SelectedIndex)
             {
                 case 0:
-                    job = Job.AnalyseQuantitative.ToString();
+                    job = Job.AnalyseQuantitative;
                     break;
                 case 1:
-                    job = Job.RechercherSequence.ToString();
+                    job = Job.RechercherSequence;
                     break;
                 case 2:
-                    job = Job.TransformerSequence.ToString();
+                    job = Job.TransformerSequence;
                     break;
                 case 3:
-                    job = Job.TrouverGene.ToString();
+                    job = Job.TrouverGene;
                     break;
                 case 4:
-                    job = Job.PredireYeux.ToString();
+                    job = Job.PredireYeux;
                     break;
             }
             return job;
@@ -187,13 +187,4 @@ namespace Client.Tools
             return name;
         }
     }
-
-    enum Job
-    {
-        AnalyseQuantitative,
-        RechercherSequence,
-        TransformerSequence,
-        TrouverGene,
-        PredireYeux,
-    };
 }

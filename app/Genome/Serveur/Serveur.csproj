@@ -55,14 +55,18 @@
   <ItemGroup>
     <Compile Include="Applicatifs\RepertoireTraitement.cs" />
     <Compile Include="Entity\Calculateur.cs" />
+    <Compile Include="Entity\ChunkData.cs" />
     <Compile Include="Entity\FileData.cs" />
     <Compile Include="Framework\IMessageTraitement.cs" />
     <Compile Include="Framework\IReducer.cs" />
+    <Compile Include="Framework\ISerializer.cs" />
     <Compile Include="Model\GenesMapper.cs" />
     <Compile Include="Tools\ConnexionOrchestrateur.cs" />
     <Compile Include="Tools\GetLocalAddress.cs" />
     <Compile Include="Tools\ThreadManager.cs" />
+    <Compile Include="Tools\Job.cs" />
     <Compile Include="Tools\MapReducer.cs" />
+    <Compile Include="Tools\Message.cs" />
     <Compile Include="Tools\MessageTreatment.cs" />
     <Compile Include="Tools\ObjectSerializer.cs" />
     <Compile Include="View_Ctrl\App.cs" />

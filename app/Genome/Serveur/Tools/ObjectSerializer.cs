@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serveur.Framework;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,17 +9,15 @@ using System.Threading.Tasks;
 
 namespace Serveur.Tools
 {
-    public class ObjectSerializer
+    public class ObjectSerializer : ISerializer
     {
         public byte[] Serialize(Object obj)
         {
             if (obj == null)
                 return null;
-
             BinaryFormatter bf = new BinaryFormatter();
             MemoryStream ms = new MemoryStream();
             bf.Serialize(ms, obj);
-
             return ms.ToArray();
         }
 
