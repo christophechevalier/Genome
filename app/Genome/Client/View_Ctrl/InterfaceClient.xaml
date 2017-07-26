@@ -13,6 +13,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="0.08*" />
+            <RowDefinition Height="0.08*" />
+            <RowDefinition Height="0.08*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -93,8 +95,77 @@
                 </Viewbox>
             </Grid>
         </Grid>
-        <Grid Grid.Row="1"
-              Grid.Column="0"
+
+        <Grid Grid.Row="1">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0"
+                  Margin="1"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Viewbox Grid.Column="1"
+                         VerticalAlignment="Stretch" 
+                         HorizontalAlignment="Stretch">
+                    <StatusBar x:Name="StatusBar"
+                               VerticalAlignment="Stretch"
+                               HorizontalAlignment="Stretch">
+                        <StatusBarItem>
+                            <TextBlock Text="Progression du status :"></TextBlock>
+                        </StatusBarItem>
+                    </StatusBar>
+                </Viewbox>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="1"
+                  Background="LightSlateGray"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Viewbox Grid.Column="0" 
+                         HorizontalAlignment="Left" 
+                         VerticalAlignment="Center">
+                    <Label x:Name="ResultatTraitement"
+                           Content="Traitement effectué !"
+                           FontSize="8"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Visibility="Visible"/>
+                </Viewbox>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="3"
               Background="#FFD85656">
 
             <Grid.RowDefinitions>
@@ -106,10 +177,10 @@
 
             <Label x:Name="LabelMessage" 
                    VerticalAlignment="Center" 
-                   HorizontalAlignment="Right"
+                   HorizontalAlignment="Center"
                    FontSize="14" 
                    Foreground="White"></Label>
 
-        </Grid>           
+        </Grid>
     </Grid>
 </Page>

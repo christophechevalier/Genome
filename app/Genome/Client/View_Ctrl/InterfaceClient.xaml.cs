@@ -32,6 +32,7 @@ namespace Client.View_Ctrl
             ConnexionClient client = new ConnexionClient();
             client.SetInputInterfaceClient(this);
             init_Selection_Traitement();
+            createProgressBar(100);
         }
         #endregion
 
@@ -68,6 +69,21 @@ namespace Client.View_Ctrl
             LabelMessage.Content = "INFORMATIONS : ''Rien a signalé ! Aucun problème n'a été détecté..'' ";
             // LabelMessage.Content = something.message;
             LabelMessage.BeginAnimation(Label.WidthProperty, da);
+        }
+
+        private void createProgressBar(int i)
+        {
+            ProgressBar ProgStatusBar = new ProgressBar();
+            ProgStatusBar.IsIndeterminate = false;
+            ProgStatusBar.Orientation = Orientation.Horizontal;
+            ProgStatusBar.Width = 400;
+            ProgStatusBar.Height = 25;
+
+            Duration dur = new Duration(TimeSpan.FromSeconds(30));
+            DoubleAnimation dblAnim = new DoubleAnimation(200.0, dur);
+            ProgStatusBar.BeginAnimation(ProgressBar.ValueProperty, dblAnim);
+            ProgStatusBar.Value = i;
+            StatusBar.Items.Add(ProgStatusBar);
         }
     }
 }
