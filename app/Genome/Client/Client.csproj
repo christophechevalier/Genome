@@ -60,7 +60,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="Tools\ConnexionClient.cs" />
-    <Compile Include="Tools\Job.cs" />
     <Compile Include="View_Ctrl\App.cs" />
     <Compile Include="View_Ctrl\Clients.cs" />
     <Compile Include="View_Ctrl\InterfaceClient.xaml.cs">

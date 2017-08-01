@@ -9,15 +9,17 @@ namespace Serveur.Tools
     class Message
     {
         private string message;
-        private int idCalculateur;
+        private string ipCalculateur;
         private string job;
+        private int actionKey;
 
         #region Constructeur
-        public Message(string message, int idCalculateur, string job)
+        public Message(string message, string job, int key, string ipCalculateur)
         {
             this.message = message;
-            this.idCalculateur = idCalculateur;
+            this.ipCalculateur = ipCalculateur;
             this.job = job;
+            this.actionKey = key;
         }
 
         public string GetMessage()
@@ -25,14 +27,19 @@ namespace Serveur.Tools
             return message;
         }
 
-        public int GetIdCalculateur()
+        public string GetIpCalculateur()
         {
-            return idCalculateur;
+            return ipCalculateur;
         }
 
         public string GetJob()
         {
             return job;
+        }
+
+        public int GetKey()
+        {
+            return actionKey;
         }
         #endregion
     }

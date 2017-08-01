@@ -1,6 +1,9 @@
-﻿using Serveur.Entity;
+﻿using Serveur.CAD;
+using Serveur.Entity;
+using Serveur.View_Ctrl;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -10,15 +13,17 @@ using System.Threading.Tasks;
 
 namespace Serveur.Tools
 {
-    class ConnexionOrchestrateur
+    public class ConnexionOrchestrateur
     {
         #region Propriétés
         IPEndPoint end;
         Socket sock;
-        public List<Calculateur> listeCalculateur;
-
         public static string path;
         public static string message = "Stopped";
+
+        public ObservableCollection<Calculateur> listeCalculateurs;
+        public OrchestrateurCAD orchCad;
+        public InterfaceOrchestrateur orchestrateur;
         #endregion
 
         #region Constructeur
@@ -30,6 +35,46 @@ namespace Serveur.Tools
             Task taskReceiveFile = Task.Run(() => ReceiveFile());
         }
         #endregion
+
+        public void SetInputInterfaceOrchestrateur(InterfaceOrchestrateur orchestrateur) 
+        {
+            this.orchestrateur = orchestrateur;
+        }
+
+        public void SetOrchestrateurCad(OrchestrateurCAD orchCAD)
+        {
+            this.orchCad = orchCAD;
+            this.orchCad.Calculateurs = this.listeCalculateurs;
+        }
+
+        public void AddCalculateurList(string ip)
+        {
+            Calculateur calc = new Calculateur();
+            calc.IP = ip;
+            calc.Status = Status.Libre;
+        }
+
+        public void ChangeStatus(string ip, Status status)
+        {
+            foreach (Calculateur calc in listeCalculateurs)
+            {
+                if (calc.IP == ip)
+                {
+                    calc.Status = status;
+                }
+            }
+        }
+
+        public void DeleteCalculateur(string ip)
+        {
+            foreach (Calculateur calc in listeCalculateurs)
+            {
+                if (calc.IP == ip)
+                {
+                    listeCalculateurs.Remove(calc);
+                }
+            }
+        }
 
         // Méthode de démarrage du serveur
         public void StartServer()
@@ -54,7 +99,7 @@ namespace Serveur.Tools
         public int NombreServeurDisponible()
         {
             int number = 0;
-            foreach (Calculateur calc in listeCalculateur)
+            foreach (Calculateur calc in listeCalculateurs)
             {
                 if (calc.Status.Equals("OK"))
                 {
@@ -85,7 +130,7 @@ namespace Serveur.Tools
                     byte[] clientData = new byte[1024 * 25000];
                     // Réception des données
                     int receiveByteLength = client.Receive(clientData);
-                    // Déserialisation des données et convertion en tyoe FileData
+                    // Déserialisation des données et convertion en type FileData
                     file = serializer.Deserialize<FileData>(clientData) as FileData;
                     // Récupération de la taille du fichier
                     int fileNameLength = BitConverter.ToInt32(file.Content, 0);

@@ -1,19 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Serveur.Entity
 {
-    class Calculateur
+    public class Calculateur
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Ip { get; set; }
-        public int NbCore { get; set; }
-        public int Cpu { get; set; }
-        public string Status { get; set; }
-        public int Task { get; set; }
+        private string _ip;
+        public string IP
+        {
+            get { return _ip; }
+            set { _ip = value; }
+        }
+        private Status _status;
+        public Status Status
+        {
+            get { return _status; }
+            set { _status = value; }
+        }
     }
 }

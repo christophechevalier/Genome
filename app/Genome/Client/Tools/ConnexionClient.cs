@@ -89,7 +89,7 @@ namespace Client.Tools
             file.FileSize = GetFileSize(fileName);
             file.Id = int.Parse(DateTime.Now.Ticks.ToString());
             file.FileName = GetFileName(fileName);
-            file.Job = DetermineJob();
+            //file.Job = DetermineJob();
             // check si le string adresse est bien au format IPV4
             if (IPAddress.TryParse(address, out ip)) { }
             else

@@ -46,5 +46,17 @@ namespace Client.View_Ctrl
         }
         #endregion
         #endregion
+
+        #region Settings
+        /// <summary>
+        ///  Méthode définissant le comportement de l'application à la fermeture de la fenêtre
+        /// </summary>
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+
+            Application.Current.Shutdown();
+        }
+        #endregion
     }
 }

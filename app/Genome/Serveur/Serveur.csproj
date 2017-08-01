@@ -57,10 +57,15 @@
     <Compile Include="Entity\Calculateur.cs" />
     <Compile Include="Entity\ChunkData.cs" />
     <Compile Include="Entity\FileData.cs" />
+    <Compile Include="Entity\FileSend.cs" />
+    <Compile Include="Entity\Job.cs" />
+    <Compile Include="Entity\Status.cs" />
     <Compile Include="Framework\IMessageTraitement.cs" />
     <Compile Include="Framework\IReducer.cs" />
     <Compile Include="Framework\ISerializer.cs" />
     <Compile Include="Model\GenesMapper.cs" />
+    <Compile Include="Systems\SystemCalculateur.cs" />
+    <Compile Include="Systems\SystemOrchestrateur.cs" />
     <Compile Include="Tools\ConnexionOrchestrateur.cs" />
     <Compile Include="Tools\GetLocalAddress.cs" />
     <Compile Include="Tools\ThreadManager.cs" />
@@ -69,6 +74,7 @@
     <Compile Include="Tools\Message.cs" />
     <Compile Include="Tools\MessageTreatment.cs" />
     <Compile Include="Tools\ObjectSerializer.cs" />
+    <Compile Include="Tools\ReadAndInterpretMessage.cs" />
     <Compile Include="View_Ctrl\App.cs" />
     <Compile Include="Tools\SocketListenerAsynchrone.cs" />
     <Compile Include="Tools\StateObject.cs" />
