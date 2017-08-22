@@ -11,12 +11,16 @@ namespace Serveur.View_Ctrl
     public partial class InterfaceCalculateur : Page
     {
         private ConnexionOrchestrateur connexion;
+        private ThreadManager threadM;
 
         public InterfaceCalculateur()
         {
             InitializeComponent();
             connexion = new ConnexionOrchestrateur();
-            connexion.envoiMessage("Salut à vous étranger !");
+            threadM = new ThreadManager();
+            //connexion.envoiMessage("Salut à vous étranger !");
+            //threadM.traitement(1, "AACCGGTTFHRHAC", 1); // Réponse A:3 ; C:3 ; T:2 ; G:2 ; Incconu:4/
+
         }
 
         /// <summary>
@@ -42,5 +46,6 @@ namespace Serveur.View_Ctrl
 
             }
         }
+
     }
 }
