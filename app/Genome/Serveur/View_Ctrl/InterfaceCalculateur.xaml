@@ -45,7 +45,8 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.2*" />
                 <RowDefinition Height="0.3*" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="0.3*" />
+                <RowDefinition Height="0.6*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.1*" />
@@ -85,6 +86,27 @@
                         FontSize="20"
                         Width="300"
                         Height="60" />
+            </Viewbox>
+            <Viewbox Margin="20,20,20,20"
+                     Grid.Row="2"
+                     Grid.Column="1"
+                     VerticalAlignment="Center" 
+                     HorizontalAlignment="Center">
+                <Label FontSize="8"
+                       Content="Informations : "
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center" />
+            </Viewbox>
+            <Viewbox Grid.Row="2" 
+                     Grid.Column="2" 
+                     HorizontalAlignment="Center" 
+                     VerticalAlignment="Center">
+                <TextBox x:Name="BoxInformations"
+                         IsReadOnly="True"
+                         FontSize="15"
+                         Height="26"
+                         Width="250" 
+                         TextWrapping="Wrap" />
             </Viewbox>
         </Grid>
 

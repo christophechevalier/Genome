@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Serveur.Tools
 {
-    class Connexion
+    public class Connexion
     {
         SystemOrchestrateur connexionOrchestrateur;
         public Connexion(SystemOrchestrateur connexionOrchestrateur)
@@ -44,7 +44,7 @@ namespace Serveur.Tools
             clientSocket.Close();
         }
 
-        public int SendMessage(String Ip, byte[] content)
+        public int SendMessage(string Ip, byte[] content)
         {
             byte[] bytes = new byte[1024];
             IPAddress ip;
@@ -52,8 +52,15 @@ namespace Serveur.Tools
             else { return 1; }
             IPEndPoint ipEnd = new IPEndPoint(ip, 2014);
             Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
-            clientSocket.Connect(ipEnd);
-            clientSocket.Send(content);
+            try
+            {
+                clientSocket.Connect(ipEnd);
+                clientSocket.Send(content);
+            }
+            catch (Exception e)
+            {
+                return 2;
+            }
             if (clientSocket.Poll(10000, SelectMode.SelectRead))
             {
                 clientSocket.Receive(bytes);

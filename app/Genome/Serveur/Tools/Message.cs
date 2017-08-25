@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Serveur.Tools
 {
+    [Serializable]
     class Message
     {
         private string message;

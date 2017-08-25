@@ -12,11 +12,13 @@ namespace Serveur.View_Ctrl
     {
         // Thread signal.
         public ManualResetEvent allDone = new ManualResetEvent(false);
+        ObjectSerializer serializer;
         ReadAndInterpretMessage interpret;
 
         public SocketListenerAsynchrone(SystemOrchestrateur conn)
         {
             interpret = new ReadAndInterpretMessage(conn);
+            serializer = new ObjectSerializer();
         }
 
         public void StartListening()
@@ -64,8 +66,7 @@ namespace Serveur.View_Ctrl
             {
                 Console.WriteLine(e.ToString());
             }
-
-            Console.WriteLine("\nPress ENTER to continue...");
+            
             Console.Read();
 
         }
@@ -88,7 +89,7 @@ namespace Serveur.View_Ctrl
 
         public void ReadCallback(IAsyncResult ar)
         {
-            String content = String.Empty;
+            byte[] content;
 
             // Récupère le StateObject et le socket asynchrone
             StateObject state = (StateObject)ar.AsyncState;
@@ -109,7 +110,8 @@ namespace Serveur.View_Ctrl
                     // Toute les données ont étées reçues, on les affiche en console
                     Console.WriteLine("Données reçues : \n {0}", content);
                     // Renvoie les données au client
-                    Send(handler, content);
+                    //Send(handler, content);
+                    serializer.Deserialize<Message>(content);
                 }
                 else
                 {

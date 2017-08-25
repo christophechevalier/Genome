@@ -67,13 +67,16 @@
     <Compile Include="Systems\SystemCalculateur.cs" />
     <Compile Include="Systems\SystemOrchestrateur.cs" />
     <Compile Include="Tools\GetLocalAddress.cs" />
+    <Compile Include="Tools\InterpretMessageCalculateur.cs" />
+    <Compile Include="Tools\SocketListenerCalculateur.cs" />
+    <Compile Include="Tools\SocketListenerOrchestrateur.cs" />
     <Compile Include="Tools\ThreadManager.cs" />
     <Compile Include="Tools\Connexion.cs" />
     <Compile Include="Tools\MapReducer.cs" />
     <Compile Include="Tools\Message.cs" />
     <Compile Include="Tools\MessageTreatment.cs" />
     <Compile Include="Tools\ObjectSerializer.cs" />
-    <Compile Include="Tools\ReadAndInterpretMessage.cs" />
+    <Compile Include="Tools\InterpretMessageOrchestrateur.cs" />
     <Compile Include="View_Ctrl\App.cs" />
     <Compile Include="Tools\SocketListenerAsynchrone.cs" />
     <Compile Include="Tools\StateObject.cs" />

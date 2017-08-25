@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace Serveur.Tools
 {
-    class ReadAndInterpretMessage
+    class InterpretMessageOrchestrateur
     {
-        SystemOrchestrateur connexionOrch;
+        SystemOrchestrateur systemOrch;
 
         #region Constructeur
-        public ReadAndInterpretMessage(SystemOrchestrateur conn)
+        public InterpretMessageOrchestrateur(SystemOrchestrateur system)
         {
-            this.connexionOrch = conn;
+            this.systemOrch = system;
         }
         #endregion
 
@@ -25,11 +25,11 @@ namespace Serveur.Tools
             {
                 // Création
                 case 0:
-                    connexionOrch.AddCalculateurList(message.GetMessage());
+                    systemOrch.AddCalculateurList(message.GetMessage());
                     break;
                 // Changement Status (libre, occupé, erreur)
                 case 1:
-                    connexionOrch.ChangeStatus(message.GetIpCalculateur(), (Status)Enum.Parse(typeof(Status), message.GetMessage()));
+                    systemOrch.ChangeStatus(message.GetIpCalculateur(), (Status)Enum.Parse(typeof(Status), message.GetMessage()));
                     break;
                 default:
                     break;
