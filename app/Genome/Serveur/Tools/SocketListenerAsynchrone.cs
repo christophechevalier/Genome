@@ -1,4 +1,5 @@
-﻿using Serveur.Tools;
+﻿using Serveur.Systems;
+using Serveur.Tools;
 using System;
 using System.Net;
 using System.Net.Sockets;
@@ -13,7 +14,7 @@ namespace Serveur.View_Ctrl
         public ManualResetEvent allDone = new ManualResetEvent(false);
         ReadAndInterpretMessage interpret;
 
-        public SocketListenerAsynchrone(ConnexionOrchestrateur conn)
+        public SocketListenerAsynchrone(SystemOrchestrateur conn)
         {
             interpret = new ReadAndInterpretMessage(conn);
         }

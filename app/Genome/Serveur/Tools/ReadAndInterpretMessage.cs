@@ -1,4 +1,5 @@
 ﻿using Serveur.Entity;
+using Serveur.Systems;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,10 @@ namespace Serveur.Tools
 {
     class ReadAndInterpretMessage
     {
-        ConnexionOrchestrateur connexionOrch;
+        SystemOrchestrateur connexionOrch;
 
         #region Constructeur
-        public ReadAndInterpretMessage(ConnexionOrchestrateur conn)
+        public ReadAndInterpretMessage(SystemOrchestrateur conn)
         {
             this.connexionOrch = conn;
         }

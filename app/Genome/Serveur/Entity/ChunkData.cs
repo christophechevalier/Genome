@@ -11,6 +11,6 @@ namespace Serveur.Entity
     {
         public long Id { get; set; }
         public List<string> Chunk { get; set; }
-        public string Job { get; set; }
+        public Job Job { get; set; }
     }
 }

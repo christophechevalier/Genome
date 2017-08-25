@@ -1,4 +1,5 @@
-﻿using Serveur.Tools;
+﻿using Serveur.Systems;
+using Serveur.Tools;
 using System;
 using System.Management;
 using System.Windows;
@@ -12,7 +13,7 @@ namespace Serveur.View_Ctrl
     public partial class InterfaceCalculateur : Page
     {
         #region Propriétés
-        private ConnexionOrchestrateur connexion;
+        private SystemOrchestrateur connexion;
         private ThreadManager threadM;
         #endregion
 
@@ -20,7 +21,6 @@ namespace Serveur.View_Ctrl
         public InterfaceCalculateur()
         {
             InitializeComponent();
-            connexion = new ConnexionOrchestrateur();
             threadM = new ThreadManager();
             //connexion.envoiMessage("Salut à vous étranger !");
             //threadM.traitement(1, "AACCGGTTFHRHAC", 1); // Réponse A:3 ; C:3 ; T:2 ; G:2 ; Incconu:4/

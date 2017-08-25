@@ -1,4 +1,5 @@
 ﻿using Serveur.Entity;
+using Serveur.Systems;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,15 @@ namespace Serveur.Tools
 {
     class Connexion
     {
-        ConnexionOrchestrateur connexionOrchestrateur;
-        public Connexion(ConnexionOrchestrateur connexionOrchestrateur)
+        SystemOrchestrateur connexionOrchestrateur;
+        public Connexion(SystemOrchestrateur connexionOrchestrateur)
         {
             this.connexionOrchestrateur = connexionOrchestrateur;
+        }
+
+        public Connexion()
+        {
+
         }
 
         public void SendMessage(Calculateur calculateur, byte[] content)

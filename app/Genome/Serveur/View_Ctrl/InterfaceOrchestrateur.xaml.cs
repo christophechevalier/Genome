@@ -1,5 +1,6 @@
 ﻿using Serveur.CAD;
 using Serveur.Entity;
+using Serveur.Systems;
 using Serveur.Tools;
 using System;
 using System.Collections.Generic;
@@ -34,19 +35,18 @@ namespace Serveur.View_Ctrl
         {
             InitializeComponent();
 
-            ConnexionOrchestrateur connexionOrchestrateur = new ConnexionOrchestrateur();
-            connexionOrchestrateur.SetInputInterfaceOrchestrateur(this);
+            //SystemOrchestrateur connexionOrchestrateur = new SystemOrchestrateur(this);
 
-            listener = new SocketListenerAsynchrone(connexionOrchestrateur);
+            //listener = new SocketListenerAsynchrone(connexionOrchestrateur);
 
-            Thread ecoute = new Thread(new ThreadStart(listener.StartListening));
-            ecoute.Start();
+            //Thread ecoute = new Thread(new ThreadStart(listener.StartListening));
+            //ecoute.Start();
 
-            OrchestrateurCAD orchCad = new OrchestrateurCAD();
-            connexionOrchestrateur.SetOrchestrateurCad(orchCad);
+            //OrchestrateurCAD orchCad = new OrchestrateurCAD();
+            //connexionOrchestrateur.SetOrchestrateurCad(orchCad);
 
-            this.DataContext = this;
-            DataGridCalculators.ItemsSource = orchCad.Calculateurs;        
+            //this.DataContext = this;
+            //DataGridCalculators.ItemsSource = orchCad.Calculateurs;        
         }
         #endregion
     }

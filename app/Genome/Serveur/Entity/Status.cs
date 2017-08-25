@@ -10,6 +10,7 @@ namespace Serveur.Entity
     {
         Libre,
         Occupe,
-        Erreur
+        Erreur,
+        Connecte
     }
 }
