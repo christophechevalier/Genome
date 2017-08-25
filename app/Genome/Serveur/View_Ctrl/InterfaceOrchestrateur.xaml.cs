@@ -1,7 +1,9 @@
-﻿using Serveur.Entity;
+﻿using Serveur.CAD;
+using Serveur.Entity;
 using Serveur.Tools;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -23,32 +25,29 @@ namespace Serveur.View_Ctrl
     /// </summary>
     public partial class InterfaceOrchestrateur : Page
     {
+        #region Propriétés
         private SocketListenerAsynchrone listener;
+        #endregion
 
+        #region Constructeur
         public InterfaceOrchestrateur()
         {
             InitializeComponent();
+
             ConnexionOrchestrateur connexionOrchestrateur = new ConnexionOrchestrateur();
-            MyDataGrid.ItemsSource = loadCollectionData();
-            listener = new SocketListenerAsynchrone();
+            connexionOrchestrateur.SetInputInterfaceOrchestrateur(this);
+
+            listener = new SocketListenerAsynchrone(connexionOrchestrateur);
+
             Thread ecoute = new Thread(new ThreadStart(listener.StartListening));
             ecoute.Start();
-        }
 
-        private List<Calculateur> loadCollectionData()
-        {
-            List<Calculateur> calc = new List<Calculateur>();
-            calc.Add(new Calculateur()
-            {
-                Id = 1,
-                Name = "Container 1",
-                Ip = "192.168.1.15",
-                NbCore = 4,
-                Cpu = 50,
-                Status = "Ok",
-                Task = 75
-            });
-            return calc;
+            OrchestrateurCAD orchCad = new OrchestrateurCAD();
+            connexionOrchestrateur.SetOrchestrateurCad(orchCad);
+
+            this.DataContext = this;
+            DataGridCalculators.ItemsSource = orchCad.Calculateurs;        
         }
+        #endregion
     }
 }

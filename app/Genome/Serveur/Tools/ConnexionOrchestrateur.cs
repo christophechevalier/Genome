@@ -1,6 +1,9 @@
-﻿using Serveur.Entity;
+﻿using Serveur.CAD;
+using Serveur.Entity;
+using Serveur.View_Ctrl;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -10,15 +13,17 @@ using System.Threading.Tasks;
 
 namespace Serveur.Tools
 {
-    class ConnexionOrchestrateur
+    public class ConnexionOrchestrateur
     {
         #region Propriétés
         IPEndPoint end;
         Socket sock;
-        public List<Calculateur> listeCalculateur;
-
         public static string path;
         public static string message = "Stopped";
+
+        public ObservableCollection<Calculateur> listeCalculateurs;
+        public OrchestrateurCAD orchCad;
+        public InterfaceOrchestrateur orchestrateur;
         #endregion
 
         #region Constructeur
@@ -31,25 +36,70 @@ namespace Serveur.Tools
         }
         #endregion
 
-        public void StartServer()
+        public void SetInputInterfaceOrchestrateur(InterfaceOrchestrateur orchestrateur) 
         {
-                try
-                {
-                    IPEndPoint endPoint = new IPEndPoint(IPAddress.Any, 2017);
-                    Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
-                    socket.Bind(endPoint);
-                    Console.WriteLine("start server");
-                }
-                catch(Exception e)
-                {
-                    Console.WriteLine("ERROR : " + e);
-                }
+            this.orchestrateur = orchestrateur;
         }
 
+        public void SetOrchestrateurCad(OrchestrateurCAD orchCAD)
+        {
+            this.orchCad = orchCAD;
+            this.orchCad.Calculateurs = this.listeCalculateurs;
+        }
+
+        public void AddCalculateurList(string ip)
+        {
+            Calculateur calc = new Calculateur();
+            calc.IP = ip;
+            calc.Status = Status.Libre;
+        }
+
+        public void ChangeStatus(string ip, Status status)
+        {
+            foreach (Calculateur calc in listeCalculateurs)
+            {
+                if (calc.IP == ip)
+                {
+                    calc.Status = status;
+                }
+            }
+        }
+
+        public void DeleteCalculateur(string ip)
+        {
+            foreach (Calculateur calc in listeCalculateurs)
+            {
+                if (calc.IP == ip)
+                {
+                    listeCalculateurs.Remove(calc);
+                }
+            }
+        }
+
+        // Méthode de démarrage du serveur
+        public void StartServer()
+        {
+            try
+            {
+                // Création de l'endpoint et du port d'écoute
+                IPEndPoint endPoint = new IPEndPoint(IPAddress.Any, 2017);
+                // Création du socket internetwork
+                Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
+                // Binding de l'endpoint
+                socket.Bind(endPoint);
+                Console.WriteLine("start server");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("ERROR : " + e);
+            }
+        }
+
+        // Méthode retournant le nombre de serveur disponible
         public int NombreServeurDisponible()
         {
             int number = 0;
-            foreach (Calculateur calc in listeCalculateur)
+            foreach (Calculateur calc in listeCalculateurs)
             {
                 if (calc.Status.Equals("OK"))
                 {
@@ -59,23 +109,44 @@ namespace Serveur.Tools
             return number;
         }
 
+        // méthode pour recevoir un fichier envoyé par un client
         public void ReceiveFile()
         {
+            // Démarrage du serveur
             StartServer();
             while (true)
             {
                 try
                 {
+                    // Création de l'objet serialiseur
+                    ObjectSerializer serializer = new ObjectSerializer();
+                    // Création de l'objet de récupération du fichier
+                    FileData file = new FileData();
+                    // Ecoute du socket avec une limite de 100
                     sock.Listen(100);
+                    // Acceptation des client par le socket
                     Socket client = sock.Accept();
-                    byte[] clientData = new byte[1024 * 5000];
+                    // Création d'un nouveau tableau de stockage des données en bytes avec comme limite 25Mo
+                    byte[] clientData = new byte[1024 * 25000];
+                    // Réception des données
                     int receiveByteLength = client.Receive(clientData);
-                    int fileNameLength = BitConverter.ToInt32(clientData, 0);
-                    string fileName = Encoding.ASCII.GetString(clientData, 4, fileNameLength);
-                    BinaryWriter writer = new BinaryWriter(File.Open(Directory.GetCurrentDirectory() + "/" + fileName, FileMode.Append));
+                    // Déserialisation des données et convertion en type FileData
+                    file = serializer.Deserialize<FileData>(clientData) as FileData;
+                    // Récupération de la taille du fichier
+                    int fileNameLength = BitConverter.ToInt32(file.Content, 0);
+                    // Récupération du nom du fichier
+                    string fileName = Encoding.ASCII.GetString(file.Content, 4, fileNameLength);
+                    // Ecriture du fichier à la racine de l'executable du serveur
+                    BinaryWriter writer = new BinaryWriter(File.Open(Directory.GetCurrentDirectory() + "/" + file.FileName, FileMode.Append));
+                    // Démarrage de l'écriture et de la sauvegarde du fichier
                     writer.Write(clientData, 4 + fileNameLength, receiveByteLength - 4 - fileNameLength);
+                    // Fermeture de l'écriture
                     writer.Close();
-                    Console.WriteLine("File Sent");
+                    Console.WriteLine("File Received");
+                    // Création de l'objet MapReducer avec comme paramètre le fichier reçu et l'Id du chunk demandé
+                    MapReducer reducer = new MapReducer(fileName, 1);
+                    // Récupération du chunk demandé sous forme de liste
+                    List<string> chunk = reducer.CreateChunk();
                 }
                 catch(Exception e)
                 {
@@ -84,6 +155,7 @@ namespace Serveur.Tools
             }
         }
 
+        // Méthode pour envoyer un message 
         public void envoiMessage(string message)
         {
             // Tableau de Byte pour la réception de données

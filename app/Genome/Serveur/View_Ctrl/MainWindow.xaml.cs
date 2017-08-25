@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Serveur.Systems;
+using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Serveur.View_Ctrl
 {
@@ -24,6 +13,8 @@ namespace Serveur.View_Ctrl
         private InterfaceServeur interServ { get; set; }
         private InterfaceCalculateur interCalc { get; set; }
         private InterfaceOrchestrateur interOrch { get; set; }
+        private SystemCalculateur systemCalc { get; set; }
+        private SystemOrchestrateur systemOrch { get; set; }
         #endregion
 
         #region Constructeur
@@ -48,6 +39,7 @@ namespace Serveur.View_Ctrl
             interServ.BtnOuvrirCalculateur.Click += delegate (object sender, RoutedEventArgs e)
             {
                 this.interCalc = new InterfaceCalculateur();
+                this.systemCalc = new SystemCalculateur(interCalc);
                 init_Listeners_Calculateur();
                 MainframeServeur.Content = interCalc;
             };
@@ -56,6 +48,7 @@ namespace Serveur.View_Ctrl
             interServ.BtnOuvrirOrchestrateur.Click += delegate (object sender, RoutedEventArgs e)
             {
                 this.interOrch = new InterfaceOrchestrateur();
+                this.systemOrch = new SystemOrchestrateur(interOrch);
                 init_Listeners_Orchestrateur();
                 MainframeServeur.Content = interOrch;
             };
@@ -87,6 +80,18 @@ namespace Serveur.View_Ctrl
             };
         }
         #endregion
+        #endregion
+
+        #region Settings
+        /// <summary>
+        ///  Méthode définissant le comportement de l'application à la fermeture de la fenêtre
+        /// </summary>
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+
+            Application.Current.Shutdown();
+        }
         #endregion
     }
 }

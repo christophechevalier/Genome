@@ -9,6 +9,8 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Serveur.Entity;
+using Serveur.Tools;
 
 namespace Client.Tools
 {
@@ -37,9 +39,10 @@ namespace Client.Tools
         // méthode pour définir le clic du bouton envoi Fichier
         public void SetInputInterfaceClient(InterfaceClient client)
         {
+            interfaceClient = client;
             client.BtnEnvoiFichier.Click += new RoutedEventHandler(delegate 
             {
-                // Appel de la méthode OpenFile au clic 
+                
                 OpenFile();
             });
         }
@@ -60,21 +63,21 @@ namespace Client.Tools
 
         void CheckFileIntegrity(string fileName)
         {
-            //string[] lines = File.ReadAllLines(fileName);
-            //for(int i = 1; i != lines.Length -1; i++)
-            //{
-            //    string[] value = lines[i].Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
-            //    char[] letters = value[3].ToCharArray();
-            //    foreach (char letter in letters)
-            //    {
-            //        if (letter != 'A' && letter != 'C' && letter != 'T' && letter != 'G' && letter != '-' && letter != 'I' && letter != 'D')
-            //        {
-            //            Console.WriteLine(value[2] + " : " + value[3]);
-            //            return;
-            //        }
-                    
-            //    }
-            //}
+            string[] lines = File.ReadAllLines(fileName);
+            for (int i = 1; i != lines.Length - 1; i++)
+            {
+                string[] value = lines[i].Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+                char[] letters = value[3].ToCharArray();
+                foreach (char letter in letters)
+                {
+                    if (letter != 'A' && letter != 'C' && letter != 'T' && letter != 'G' && letter != '-' && letter != 'I' && letter != 'D')
+                    {
+                        Console.WriteLine(value[2] + " : " + value[3]);
+                        return;
+                    }
+
+                }
+            }
             Console.WriteLine("Fichier intègre");
             SendFile(fileName, ip);
         }
@@ -82,7 +85,11 @@ namespace Client.Tools
         void SendFile(string fileName, string address)
         {
             IPAddress ip;
-
+            FileData file = new FileData();
+            file.FileSize = GetFileSize(fileName);
+            file.Id = int.Parse(DateTime.Now.Ticks.ToString());
+            file.FileName = GetFileName(fileName);
+            //file.Job = DetermineJob();
             // check si le string adresse est bien au format IPV4
             if (IPAddress.TryParse(address, out ip)) { }
             else
@@ -108,11 +115,6 @@ namespace Client.Tools
 
             // Traduit le fichier en tableau de bytes
             byte[] fileNameByte = Encoding.ASCII.GetBytes(fileName);
-            if(fileNameByte.Length > 850 * 1024)
-            {
-                message = "File size is more than 850kb, please try with smaller file";
-                return;
-            }
 
             // Encode toutes les données en bytes avant l'envois
             message = "Buffering ...";
@@ -125,18 +127,64 @@ namespace Client.Tools
             fileNameByte.CopyTo(clientData, 4);
             fileData.CopyTo(clientData, 4 + fileNameByte.Length);
 
+            file.Content = clientData;
+            ObjectSerializer serializer = new ObjectSerializer();
+            byte[] objectSerialized = serializer.Serialize(file);
+
             // Connexion au client
             message = "Connection to server ...";
             clientSocket.Connect(ipEnd);
 
             // Envois du fichier au client
             message = "File Sending ...";
-            clientSocket.Send(clientData);
+            clientSocket.Send(objectSerialized);
 
             // Fermeture de la connexion
             message = "Disconnecting ...";
             clientSocket.Close();
             message = "File transfered";
+        }
+
+        float GetFileSize(string fileName)
+        {
+            float value = new float();
+            FileInfo fileInfo = new FileInfo(fileName);
+            value = fileInfo.Length;
+            Console.WriteLine(value);
+            return value;
+        }
+
+        Job DetermineJob()
+        {
+            Job job = new Job();
+            switch (interfaceClient.DataSelect.SelectedIndex)
+            {
+                case 0:
+                    job = Job.AnalyseQuantitative;
+                    break;
+                case 1:
+                    job = Job.RechercherSequence;
+                    break;
+                case 2:
+                    job = Job.TransformerSequence;
+                    break;
+                case 3:
+                    job = Job.TrouverGene;
+                    break;
+                case 4:
+                    job = Job.PredireYeux;
+                    break;
+            }
+            return job;
+        }
+
+        string GetFileName(string fileName)
+        {
+            string name = "";
+            FileInfo fileInfo = new FileInfo(fileName);
+            name = fileInfo.Name;
+            Console.WriteLine(name);
+            return name;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Serveur.Tools;
 using System;
 using System.Management;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Serveur.View_Ctrl
@@ -10,9 +11,12 @@ namespace Serveur.View_Ctrl
     /// </summary>
     public partial class InterfaceCalculateur : Page
     {
+        #region Propriétés
         private ConnexionOrchestrateur connexion;
         private ThreadManager threadM;
+        #endregion
 
+        #region Constructeur
         public InterfaceCalculateur()
         {
             InitializeComponent();
@@ -22,6 +26,7 @@ namespace Serveur.View_Ctrl
             //threadM.traitement(1, "AACCGGTTFHRHAC", 1); // Réponse A:3 ; C:3 ; T:2 ; G:2 ; Incconu:4/
 
         }
+        #endregion
 
         /// <summary>
         /// Méthode pour récupérer le nombre de coeurs d'un calculateur
@@ -43,7 +48,7 @@ namespace Serveur.View_Ctrl
             }
             catch (Exception ex)
             {
-
+                MessageBox.Show(ex + "Une erreur s'est produite");
             }
         }
 

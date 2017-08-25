@@ -47,7 +47,8 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <DataGrid x:Name="MyDataGrid"
+            <DataGrid x:Name="DataGridCalculators"
+                      AutoGenerateColumns="False"
                       Grid.Row="1"
                       Grid.Column="0"
                       Height="450"
@@ -70,7 +71,8 @@
                       VerticalScrollBarVisibility="Visible"
                       SelectionMode="Extended"
                       RowHeight="30" 
-                      ColumnWidth="110" />
+                      ColumnWidth="110">
+            </DataGrid>
         </Grid>
 
 

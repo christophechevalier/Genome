@@ -11,6 +11,12 @@ namespace Serveur.View_Ctrl
     {
         // Thread signal.
         public ManualResetEvent allDone = new ManualResetEvent(false);
+        ReadAndInterpretMessage interpret;
+
+        public SocketListenerAsynchrone(ConnexionOrchestrateur conn)
+        {
+            interpret = new ReadAndInterpretMessage(conn);
+        }
 
         public void StartListening()
         {
