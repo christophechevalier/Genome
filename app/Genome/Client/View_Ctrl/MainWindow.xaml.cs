@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Client.Tools;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,7 +22,8 @@ namespace Client.View_Ctrl
     public partial class MainWindow : Window
     {
         #region Propriétés
-        private InterfaceClient interClient { get; set; }
+        private ConnexionClient systemClient;
+        private InterfaceClient interClient;
         #endregion
 
         #region Constructeur
@@ -30,6 +32,7 @@ namespace Client.View_Ctrl
             InitializeComponent();
 
             this.interClient = new InterfaceClient();
+            this.systemClient = new ConnexionClient(interClient);
             MainframeClient.Content = interClient;
             init_Listeners_Client();
         }

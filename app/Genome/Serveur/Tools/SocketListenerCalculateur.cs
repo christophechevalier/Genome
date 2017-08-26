@@ -1,33 +1,44 @@
-﻿using Serveur.Systems;
+﻿using Serveur.Entity;
+using Serveur.Systems;
+using Serveur.View_Ctrl;
 using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using System.Threading;
 
 namespace Serveur.Tools
 {
-    class SocketListenerCalculateur
+    public class SocketListenerCalculateur
     {
-        ObjectSerializer serializer;
-        Message message;
-        IPEndPoint end;
-        Socket sock;
-        SystemCalculateur system;
-        InterpretMessageCalculateur interpretMessage;
+        public ObjectSerializer serializer;
+        public IPEndPoint end;
+        public Socket sock;
+        public SystemCalculateur system;
+        public InterpretMessageCalculateur interpretMessage;
+        SocketListenerAsynchrone listener;
 
         public SocketListenerCalculateur(SystemCalculateur system)
         {
             this.serializer = new ObjectSerializer();
             this.system = system;
             this.interpretMessage = new InterpretMessageCalculateur(system);
+            this.listener = new SocketListenerAsynchrone(this);
+
         }
 
         public void startListening()
         {
+            /*
             end = new IPEndPoint(IPAddress.Any, 2014);
             sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
             sock.Bind(end);
             Thread ecoute = new Thread(new ThreadStart(ReceiveMessage));
+            ecoute.IsBackground = true;
+            ecoute.Start();
+            /*/
+            Thread ecoute = new Thread(new ThreadStart(listener.StartListening));
+            ecoute.IsBackground = true;
             ecoute.Start();
         }
 
@@ -37,20 +48,27 @@ namespace Serveur.Tools
             {
                 try
                 {
+                    /*
                     sock.Listen(100);
                     Socket client = sock.Accept();
-                    byte[] clientData = new byte[1024 * 25000];
-                    int receiveByteLength = client.Receive(clientData);
-                    message = serializer.Deserialize<Message>(clientData) as Message;
+                    byte[] clientData = new byte[10240];
+
+                    while (Convert.ToString(clientData[clientData.Length - 1]) != ">" )
+                    {
+                        client.Receive(clientData);
+                    }
+                    //int receiveByteLength = 
                     Console.WriteLine("Message received");
-                    interpretMessage.RetrieveMessage(message);
-                }
+                    chunk = (ChunkData) serializer.Deserialize<ChunkData>(clientData);
+                    interpretMessage.RetrieveMessage(chunk);
+                    */
+                    }
                 catch (Exception e)
                 {
                     Console.WriteLine("ERROR : " + e);
                 }
+
             }
         }
-
     }
 }

@@ -48,7 +48,7 @@
             </Grid.ColumnDefinitions>
 
             <DataGrid x:Name="DataGridCalculators"
-                      AutoGenerateColumns="False"
+                      AutoGenerateColumns="True"
                       Grid.Row="1"
                       Grid.Column="0"
                       Height="450"

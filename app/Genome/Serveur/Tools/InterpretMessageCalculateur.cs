@@ -3,7 +3,7 @@ using Serveur.Systems;
 
 namespace Serveur.Tools
 {
-    class InterpretMessageCalculateur
+    public class InterpretMessageCalculateur
     {
         SystemCalculateur systemCalc;
 
@@ -14,20 +14,9 @@ namespace Serveur.Tools
         }
         #endregion
 
-        public void RetrieveMessage(Message message)
+        public void RetrieveMessage(ChunkData chunk)
         {
-            switch (message.GetKey())
-            {
-                // Création
-                case 0:
-                    systemCalc.threadM.traitement(message.GetMessage(), Job.AnalyseQuantitative);
-                    break;
-                // Changement Status (libre, occupé, erreur)
-                case 1:
-                    break;
-                default:
-                    break;
-            }
+            systemCalc.threadM.traitement(chunk.Chunk, chunk.Job);
         }
     }
 }

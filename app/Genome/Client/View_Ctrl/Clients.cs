@@ -22,7 +22,7 @@ namespace Client.View_Ctrl
 
         public void SendFile()
         {
-            if(adresseOrchestrateur == "")
+            if (adresseOrchestrateur == "")
             {
                 MessageError("Aucune connexion à un orchestrateur");
             }

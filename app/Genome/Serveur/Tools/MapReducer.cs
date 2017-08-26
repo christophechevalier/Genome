@@ -1,36 +1,28 @@
 ﻿using Serveur.Entity;
-using Serveur.Framework;
 using Serveur.Systems;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace Serveur.Tools
 {
     class MapReducer
     {
-        SystemOrchestrateur connexionOrchestrateur;
+        SystemOrchestrateur systemOrch;
         string file;
         int index = 0;
         int indexCalculateur = 0;
-        bool canCreateChunk = true;
-        public MapReducer(string file, SystemOrchestrateur connexionOrchestrateur)
+
+        public MapReducer(string file, SystemOrchestrateur systemOrch)
         {
             this.file = file;
-            this.connexionOrchestrateur = connexionOrchestrateur;
+            this.systemOrch = systemOrch;
             while (index < 999)
             {
                 CreateChunk();
+                Thread.Sleep(250);
             }
-            //for(int i = 0; i <= 1000 ; i++)
-            //{
-            //    canCreateChunk = true;
-            //    CreateChunk();
-            //}
-            //canCreateChunk = false;
         }
 
         void CreateChunk()
@@ -47,7 +39,7 @@ namespace Serveur.Tools
             ChunkData chunkPrepared = new ChunkData();
             chunkPrepared.Id = index;
             chunkPrepared.Chunk = chunk;
-            chunkPrepared.Job = connexionOrchestrateur.jobAsked;
+            chunkPrepared.Job = systemOrch.jobAsked;
             SendChunck(chunkPrepared);
             index++;
         }
@@ -60,7 +52,19 @@ namespace Serveur.Tools
                 Connexion connexion = new Connexion();
                 ObjectSerializer serializer = new ObjectSerializer();
                 byte[] objectSerialized = serializer.Serialize(chunkData);
-                connexion.SendMessage(calculateur, objectSerialized);
+                byte[] endEnvoi = Encoding.ASCII.GetBytes("<EOF>");
+                //Thread.Sleep(10000);
+                byte[] content = new byte[objectSerialized.Length + endEnvoi.Length];
+                for (int i = 0; i < objectSerialized.Length; i++)
+                {
+                    content.SetValue(objectSerialized[i], i);
+                }
+                for (int i = 0; i < endEnvoi.Length; i++)
+                {
+                    content.SetValue(endEnvoi[i], objectSerialized.Length + i);
+                }
+
+                connexion.SendMessage(calculateur, content);
             }
             else
             {
@@ -72,14 +76,14 @@ namespace Serveur.Tools
         Calculateur FindCalculateur()
         {
             bool send = false;
-            if(connexionOrchestrateur.listeCalculateurs.Count != 0)
+            if(systemOrch.listeCalculateurs.Count != 0)
             {
                 while (!send)
                 {
-                    if (connexionOrchestrateur.listeCalculateurs[indexCalculateur].Status == Status.Connecte)
+                    if (systemOrch.listeCalculateurs[indexCalculateur].Status == Status.Connecte)
                     {
                         int realIndex = indexCalculateur;
-                        if (indexCalculateur < connexionOrchestrateur.listeCalculateurs.Count - 1)
+                        if (indexCalculateur < systemOrch.listeCalculateurs.Count - 1)
                         {
                             indexCalculateur++;
                         }
@@ -88,11 +92,11 @@ namespace Serveur.Tools
                             indexCalculateur = 0;
                         }
                         send = true;
-                        return connexionOrchestrateur.listeCalculateurs[realIndex];
+                        return systemOrch.listeCalculateurs[realIndex];
                     }
                     else
                     {
-                        if (indexCalculateur < connexionOrchestrateur.listeCalculateurs.Count - 1)
+                        if (indexCalculateur < systemOrch.listeCalculateurs.Count - 1)
                         {
                             indexCalculateur++;
                         }

@@ -14,12 +14,12 @@ using Serveur.Tools;
 
 namespace Client.Tools
 {
-    class ConnexionClient
+    public class ConnexionClient
     {
         // adresse IP de l'orchestrateur
-        private static InterfaceClient interfaceClient;
-        private static readonly object padlock = new object();
-        public static InterfaceClient InterfaceClient
+        private InterfaceClient interfaceClient;
+        private readonly object padlock = new object();
+        /*public static InterfaceClient InterfaceClient
         {
             get
             {
@@ -32,18 +32,21 @@ namespace Client.Tools
                     return interfaceClient;
                 }
             }
+        }*/
+        public string message = "Idle";
+
+        public ConnexionClient(InterfaceClient interf)
+        {
+            this.interfaceClient = interf;
+            interfaceClient.BtnEnvoiFichier.Click += new RoutedEventHandler(delegate
+            {
+                OpenFile();
+            });
         }
-        public static string ip = "127.0.0.1";
-        public static string message = "Idle";
 
         // méthode pour définir le clic du bouton envoi Fichier
         public void SetInputInterfaceClient(InterfaceClient client)
         {
-            interfaceClient = client;
-            client.BtnEnvoiFichier.Click += new RoutedEventHandler(delegate 
-            {
-                OpenFile();
-            });
         }
 
         // méthode pour ouvrir le file dialog
@@ -78,7 +81,9 @@ namespace Client.Tools
                 }
             }
             Console.WriteLine("Fichier intègre");
-            SendFile(fileName, ip);
+
+            //ipDistant = interfaceClient.IpAdressDistant.Text;
+            SendFile(fileName, interfaceClient.IpAdressDistant.Text);
         }
 
         void SendFile(string fileName, string address)
@@ -86,7 +91,7 @@ namespace Client.Tools
             IPAddress ip;
             FileData file = new FileData();
             file.FileSize = GetFileSize(fileName);
-            file.Id = int.Parse(DateTime.Now.Ticks.ToString());
+            file.Id = long.Parse(DateTime.Now.Ticks.ToString());
             file.FileName = GetFileName(fileName);
             //file.Job = DetermineJob();
             // check si le string adresse est bien au format IPV4
@@ -98,7 +103,7 @@ namespace Client.Tools
             }
 
             // informations de port local
-            IPEndPoint ipEnd = new IPEndPoint(ip, 2014);
+            IPEndPoint ipEnd = new IPEndPoint(ip, 2015);
 
             // Création du socket réseau utilisant le protocole IP
             Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);

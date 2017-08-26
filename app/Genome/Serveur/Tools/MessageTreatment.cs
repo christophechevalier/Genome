@@ -9,7 +9,7 @@ namespace Serveur.Tools
 {
     class MessageTreatment : IMessageTraitement
     {
-        private string chunk;
+        //private string chunk;
         private string contenu;
         private int id;
         private int position;

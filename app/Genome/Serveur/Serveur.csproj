@@ -64,10 +64,12 @@
     <Compile Include="Framework\IReducer.cs" />
     <Compile Include="Framework\ISerializer.cs" />
     <Compile Include="Model\GenesMapper.cs" />
+    <Compile Include="StateObject.cs" />
     <Compile Include="Systems\SystemCalculateur.cs" />
     <Compile Include="Systems\SystemOrchestrateur.cs" />
     <Compile Include="Tools\GetLocalAddress.cs" />
     <Compile Include="Tools\InterpretMessageCalculateur.cs" />
+    <Compile Include="Tools\SocketListenerAsynchrone.cs" />
     <Compile Include="Tools\SocketListenerCalculateur.cs" />
     <Compile Include="Tools\SocketListenerOrchestrateur.cs" />
     <Compile Include="Tools\ThreadManager.cs" />
@@ -78,8 +80,6 @@
     <Compile Include="Tools\ObjectSerializer.cs" />
     <Compile Include="Tools\InterpretMessageOrchestrateur.cs" />
     <Compile Include="View_Ctrl\App.cs" />
-    <Compile Include="Tools\SocketListenerAsynchrone.cs" />
-    <Compile Include="Tools\StateObject.cs" />
     <Page Include="View_Ctrl\InterfaceCalculateur.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Serveur.Entity
 {
     [Serializable]
-    class ChunkData
+    public class ChunkData
     {
         public long Id { get; set; }
         public List<string> Chunk { get; set; }

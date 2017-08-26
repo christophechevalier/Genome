@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 namespace Serveur.Tools
 {
     [Serializable]
-    class Message
+    public class Message
     {
-        private string message;
-        private string ipCalculateur;
-        private string job;
-        private int actionKey;
+        public string message;
+        public string ipCalculateur;
+        public string job;
+        public int actionKey;
 
         #region Constructeur
         public Message(string message, string job, int key, string ipCalculateur)
@@ -22,6 +22,7 @@ namespace Serveur.Tools
             this.job = job;
             this.actionKey = key;
         }
+        #endregion
 
         public string GetMessage()
         {
@@ -42,6 +43,5 @@ namespace Serveur.Tools
         {
             return actionKey;
         }
-        #endregion
     }
 }

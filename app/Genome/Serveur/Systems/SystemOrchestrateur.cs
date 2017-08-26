@@ -12,6 +12,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace Serveur.Systems
 {
@@ -22,9 +23,9 @@ namespace Serveur.Systems
         Socket sock;
         public static string path;
         public static string message = "Stopped";
-        public List<Calculateur> listeCalculateurs;
+        public ObservableCollection<Calculateur> listeCalculateurs;
         public OrchestrateurCAD orchCad;
-        public InterfaceOrchestrateur orchestrateur;
+        public InterfaceOrchestrateur interfOrch;
         public Job jobAsked;
         private GetLocalAddress getAdress;
         private SocketListenerOrchestrateur listener;
@@ -33,37 +34,34 @@ namespace Serveur.Systems
         #region Constructeur
         public SystemOrchestrateur(InterfaceOrchestrateur interfaceOrchestrateur)
         {
-            this.orchestrateur = interfaceOrchestrateur;
+            this.interfOrch = interfaceOrchestrateur;
             this.orchCad = new OrchestrateurCAD();
+            this.listeCalculateurs = new ObservableCollection<Calculateur>();
+            this.orchCad.Calculateurs = this.listeCalculateurs;
             this.getAdress = new GetLocalAddress();
-            this.orchestrateur.adresseIp.Content = getAdress.GetAddress();
-            this.listeCalculateurs = new List<Calculateur>();
-            //end = new IPEndPoint(IPAddress.Any, 2014);
-            //sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
-            //sock.Bind(end);
-            //Task taskReceiveFile = Task.Run(() => ReceiveFile());
+            this.interfOrch.adresseIp.Content = getAdress.GetAddress();
+            this.interfOrch.DataContext = this;
+            this.interfOrch.DataGridCalculators.ItemsSource = orchCad.Calculateurs;
+            this.listener = new SocketListenerOrchestrateur(this);
+            this.end = new IPEndPoint(IPAddress.Any, 2015);
+            this.sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
 
-            listener = new SocketListenerOrchestrateur(this);
-            Thread ecoute = new Thread(new ThreadStart(listener.startListening));
-            ecoute.Start();
-            
-            SetOrchestrateurCad(orchCad);
-
-            orchestrateur.DataContext = this;
-            orchestrateur.DataGridCalculators.ItemsSource = orchCad.Calculateurs;
-        }
-
-        public void SetInputInterfaceOrchestrateur(InterfaceOrchestrateur orchestrateur)
-        {
-            this.orchestrateur = orchestrateur;
-        }
-
-        public void SetOrchestrateurCad(OrchestrateurCAD orchCAD)
-        {
-            this.orchCad = orchCAD;
-            //this.orchCad.Calculateurs = this.listeCalculateurs;
+            startEcouteFile();
+            startEcouteMessage();
         }
         #endregion
+        private void startEcouteMessage()
+        {
+            Thread ecoute = new Thread(new ThreadStart(listener.startListening));
+            ecoute.IsBackground = true;
+            ecoute.Start();
+        }
+
+        private void startEcouteFile()
+        {
+            sock.Bind(end);
+            Task taskReceiveFile = Task.Run(() => ReceiveFile());
+        }
 
         public void AddCalculateurList(string ip)
         {
@@ -79,8 +77,15 @@ namespace Serveur.Systems
             {
                 Calculateur calc = new Calculateur();
                 calc.IP = ip;
-                calc.Status = Status.Libre;
-                listeCalculateurs.Add(calc);
+                calc.Status = Status.Connecte;
+
+                System.Windows.Application.Current.Dispatcher.Invoke(
+                    DispatcherPriority.Normal,
+                    (Action)delegate()
+                    {
+                        listeCalculateurs.Add(calc);
+                    }
+                );
             }
         }
 
@@ -184,63 +189,5 @@ namespace Serveur.Systems
                 }
             }
         }
-
-        // Méthode pour envoyer un message 
-        //public void envoiMessage(string message)
-        //{
-        //    // Tableau de Byte pour la réception de données
-        //    byte[] bytes = new byte[1024];
-
-        //    // Connection à un appareil distant
-        //    try
-        //    {
-        //        // Met en place un IPEndPoint pour la connexion par socket, ici port 80 et adresse de ce poste
-        //        IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostAddresses(Dns.GetHostName())[0]);
-        //        IPAddress ipAddress = ipHostInfo.AddressList[0];
-        //        IPEndPoint remoteEP = new IPEndPoint(ipAddress, 80);
-
-        //        // Création du socket TCP/IP
-        //        Socket sock = new Socket(AddressFamily.InterNetworkV6, SocketType.Stream, ProtocolType.Tcp);
-        //        // Connection du socket à l'IPEndPoint avec récupération des exceptions
-        //        try
-        //        {
-        //            sock.Connect(remoteEP);
-
-        //            Console.WriteLine("Socket connected to {0}", sock.RemoteEndPoint.ToString());
-
-        //            // Encode la chaine de caractère en un tableau de byte
-        //            byte[] msg = Encoding.ASCII.GetBytes(message + "<EOF>");
-
-        //            // Envoie les données par le socket
-        //            int bytesSent = sock.Send(msg);
-
-        //            // Reçois la réponse du poste distant
-        //            int bytesRec = sock.Receive(bytes);
-        //            Console.WriteLine("Réponse de l'orchestrateur = {0}", Encoding.ASCII.GetString(bytes, 0, bytesRec));
-
-        //            // Libère le socket
-        //            sock.Shutdown(SocketShutdown.Both);
-        //            sock.Close();
-
-        //        }
-        //        catch (ArgumentNullException ane)
-        //        {
-        //            Console.WriteLine("ArgumentNullException : {0}", ane.ToString());
-        //        }
-        //        catch (SocketException se)
-        //        {
-        //            Console.WriteLine("SocketException : {0}", se.ToString());
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            Console.WriteLine("Unexpected exception : {0}", e.ToString());
-        //        }
-
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e.ToString());
-        //    }
-        //}
     }
 }

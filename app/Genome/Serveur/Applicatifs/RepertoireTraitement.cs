@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace Serveur.Applicatifs
+﻿namespace Serveur.Applicatifs
 {
     class RepertoireTraitement
     {
-        public void countLetters(string chaine)
+        public string countLetters(string chaine)
         {
-            Console.WriteLine("Passage");
+            //Console.WriteLine("Passage");
 
             int countA = 0;
             int countC = 0;
@@ -43,13 +36,15 @@ namespace Serveur.Applicatifs
                         break;
                 }
             }
-            Thread.Sleep(2000);
+            /*Thread.Sleep(2000);
             Console.WriteLine("Nombre de A dans la chaine : " + countA);
             Console.WriteLine("Nombre de C dans la chaine : " + countC);
             Console.WriteLine("Nombre de G dans la chaine : " + countG);
             Console.WriteLine("Nombre de T dans la chaine : " + countT);
             Console.WriteLine("Nombre d'inconnu dans la chaine : " + countS);
-            Console.WriteLine("Nombre de caractère ignoré dans la chaine : " + countI);
+            Console.WriteLine("Nombre de caractère ignoré dans la chaine : " + countI);*/
+
+            return "A:" + countA + "/C:" + countC + "/G:" + countG + "/T:" + countT + "/-:" + countS;
         }
 
         public void searchSequence(string chaine)

@@ -24,8 +24,9 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.50*" />
-                <RowDefinition Height="*" />
                 <RowDefinition Height="0.50*" />
+                <RowDefinition Height="0.50*" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.50*" />
@@ -75,21 +76,64 @@
                   HorizontalAlignment="Center">
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
+                    <RowDefinition Height="0.2*" />
+                    <RowDefinition Height="0.5*" />
+                    <RowDefinition Height="0.2*" />
+                    <RowDefinition Height="0.5*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.5*" />
-                    <ColumnDefinition Width="0.5*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Viewbox Grid.Row="1" 
+                         Grid.Column="0"
+                         HorizontalAlignment="Left" 
+                         VerticalAlignment="Stretch">
+                    <Label Content="IP Hôte Distant :"
+                           FontWeight="Bold"
+                           FontSize="15"
+                           HorizontalAlignment="Stretch" 
+                           VerticalAlignment="Stretch" />
+                </Viewbox>
+                <Viewbox Grid.Row="1" 
+                         Grid.Column="1" 
+                         HorizontalAlignment="Center" 
+                         VerticalAlignment="Center">
+                    <TextBox x:Name="IpAdressDistant"
+                         FontSize="15"
+                         Height="26"
+                         Width="250" 
+                         TextWrapping="Wrap" />
+                </Viewbox>
+            </Grid>
+
+            <Grid Grid.Column="1"
+                  Grid.Row="2"
+                  VerticalAlignment="Stretch" 
+                  HorizontalAlignment="Stretch">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.1*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="0.5*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.2*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="0.2*" />
                 </Grid.ColumnDefinitions>
 
                 <Viewbox Grid.Row="1"
-                         Grid.Column="2"
+                         Grid.Column="1"
                          VerticalAlignment="Stretch" 
                          HorizontalAlignment="Stretch">
                     <Button x:Name="BtnEnvoiFichier"
                             FontSize="20"
                             Width="400"
                             Height="60"
+                            VerticalAlignment="Stretch" 
+                            HorizontalAlignment="Stretch"
                             Content="Envoi Fichier">
                     </Button>
                 </Viewbox>
