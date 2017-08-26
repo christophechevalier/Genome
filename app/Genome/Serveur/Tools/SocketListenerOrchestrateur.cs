@@ -1,13 +1,8 @@
 ﻿using Serveur.Systems;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Serveur.Tools
 {
@@ -18,13 +13,13 @@ namespace Serveur.Tools
         IPEndPoint end;
         Socket sock;
         SystemOrchestrateur system;
-        ReadAndInterpretMessage interpretMessage;
+        InterpretMessageOrchestrateur interpretMessage;
 
         public SocketListenerOrchestrateur(SystemOrchestrateur system)
         {
             this.serializer = new ObjectSerializer();
             this.system = system;
-            this.interpretMessage = new ReadAndInterpretMessage(system);
+            this.interpretMessage = new InterpretMessageOrchestrateur(system);
         }
 
         public void startListening()
@@ -42,7 +37,7 @@ namespace Serveur.Tools
             try
             {
                 // Création de l'endpoint et du port d'écoute
-                IPEndPoint endPoint = new IPEndPoint(IPAddress.Any, 2017);
+                IPEndPoint endPoint = new IPEndPoint(IPAddress.Any, 2014);
                 // Création du socket internetwork
                 Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
                 // Binding de l'endpoint

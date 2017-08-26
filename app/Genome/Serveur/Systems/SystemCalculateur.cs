@@ -1,7 +1,6 @@
 ﻿using Serveur.Tools;
 using Serveur.View_Ctrl;
 using System;
-using System.Threading;
 using System.Windows;
 
 namespace Serveur.Systems
@@ -12,7 +11,8 @@ namespace Serveur.Systems
         private ObjectSerializer serializer;
         private GetLocalAddress getAdress;
         private Connexion conn;
-        private ThreadManager threadM;
+        private SocketListenerCalculateur socketListener;
+        public ThreadManager threadM;
 
         private string receiveMessage = "Elements envoyés et reçu";
         private string notReceiveMessage = "Elements envoyés et non reçu";
@@ -28,6 +28,7 @@ namespace Serveur.Systems
             this.threadM = new ThreadManager();
             this.interf = interf;
             this.interf.BtnAppareillage.Click += new RoutedEventHandler(onClickAppareillage);
+            this.socketListener = new SocketListenerCalculateur(this);
         }
 
         private void onClickAppareillage(object sender, EventArgs e)

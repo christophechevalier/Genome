@@ -85,7 +85,7 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.5*" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="0.5*" />
             </Grid.ColumnDefinitions>
 
             <Grid Background="DarkGray"
@@ -116,6 +116,9 @@
                             Width="200"
                             Height="40"
                             Content="Retour" />
+                </Viewbox>
+                <Viewbox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Label x:Name="adresseIp" Content="CONTENU DU LABEL" FontSize="4" />
                 </Viewbox>
             </Grid>
 

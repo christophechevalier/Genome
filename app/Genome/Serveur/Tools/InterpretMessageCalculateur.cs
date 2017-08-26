@@ -1,10 +1,5 @@
 ﻿using Serveur.Entity;
 using Serveur.Systems;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Serveur.Tools
 {
@@ -25,6 +20,7 @@ namespace Serveur.Tools
             {
                 // Création
                 case 0:
+                    systemCalc.threadM.traitement(message.GetMessage(), Job.AnalyseQuantitative);
                     break;
                 // Changement Status (libre, occupé, erreur)
                 case 1:

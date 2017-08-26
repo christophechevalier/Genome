@@ -22,11 +22,12 @@ namespace Serveur.Systems
         Socket sock;
         public static string path;
         public static string message = "Stopped";
-        public ObservableCollection<Calculateur> listeCalculateurs;
+        public List<Calculateur> listeCalculateurs;
         public OrchestrateurCAD orchCad;
         public InterfaceOrchestrateur orchestrateur;
         public Job jobAsked;
-        private SocketListenerAsynchrone listener;
+        private GetLocalAddress getAdress;
+        private SocketListenerOrchestrateur listener;
         #endregion
 
         #region Constructeur
@@ -34,13 +35,16 @@ namespace Serveur.Systems
         {
             this.orchestrateur = interfaceOrchestrateur;
             this.orchCad = new OrchestrateurCAD();
-            end = new IPEndPoint(IPAddress.Any, 2014);
-            sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
-            sock.Bind(end);
-            Task taskReceiveFile = Task.Run(() => ReceiveFile());
+            this.getAdress = new GetLocalAddress();
+            this.orchestrateur.adresseIp.Content = getAdress.GetAddress();
+            this.listeCalculateurs = new List<Calculateur>();
+            //end = new IPEndPoint(IPAddress.Any, 2014);
+            //sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
+            //sock.Bind(end);
+            //Task taskReceiveFile = Task.Run(() => ReceiveFile());
 
-            listener = new SocketListenerAsynchrone(this);
-            Thread ecoute = new Thread(new ThreadStart(listener.StartListening));
+            listener = new SocketListenerOrchestrateur(this);
+            Thread ecoute = new Thread(new ThreadStart(listener.startListening));
             ecoute.Start();
             
             SetOrchestrateurCad(orchCad);
@@ -57,18 +61,27 @@ namespace Serveur.Systems
         public void SetOrchestrateurCad(OrchestrateurCAD orchCAD)
         {
             this.orchCad = orchCAD;
-            this.orchCad.Calculateurs = this.listeCalculateurs;
+            //this.orchCad.Calculateurs = this.listeCalculateurs;
         }
         #endregion
 
-
-
-
         public void AddCalculateurList(string ip)
         {
-            Calculateur calc = new Calculateur();
-            calc.IP = ip;
-            calc.Status = Status.Libre;
+            bool trouv = false;
+            foreach (Calculateur calcul in listeCalculateurs)
+            {
+                if (calcul.IP == ip)
+                {
+                    trouv = true;
+                }
+            }
+            if (!trouv)
+            {
+                Calculateur calc = new Calculateur();
+                calc.IP = ip;
+                calc.Status = Status.Libre;
+                listeCalculateurs.Add(calc);
+            }
         }
 
         public void ChangeStatus(string ip, Status status)

@@ -13,11 +13,11 @@ namespace Serveur.View_Ctrl
         // Thread signal.
         public ManualResetEvent allDone = new ManualResetEvent(false);
         ObjectSerializer serializer;
-        ReadAndInterpretMessage interpret;
+        //ReadAndInterpretMessage interpret;
 
         public SocketListenerAsynchrone(SystemOrchestrateur conn)
         {
-            interpret = new ReadAndInterpretMessage(conn);
+            //interpret = new ReadAndInterpretMessage(conn);
             serializer = new ObjectSerializer();
         }
 
@@ -89,7 +89,7 @@ namespace Serveur.View_Ctrl
 
         public void ReadCallback(IAsyncResult ar)
         {
-            byte[] content;
+            //byte[] content;
 
             // Récupère le StateObject et le socket asynchrone
             StateObject state = (StateObject)ar.AsyncState;
@@ -104,7 +104,7 @@ namespace Serveur.View_Ctrl
                 state.sb.Append(Encoding.ASCII.GetString(state.buffer, 0, bytesRead));
 
                 // Vérifie la présence du tag de fin, si il n'y est pas, on lit plus de données
-                content = state.sb.ToString();
+                /*content = state.sb.ToString();
                 if (content.IndexOf("<EOF>") > -1)
                 {
                     // Toute les données ont étées reçues, on les affiche en console
@@ -117,7 +117,7 @@ namespace Serveur.View_Ctrl
                 {
                     // Si toutes les données n'ont pas étées reçues, on continue de lire
                     handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0, new AsyncCallback(ReadCallback), state);
-                }
+                }*/
             }
         }
 

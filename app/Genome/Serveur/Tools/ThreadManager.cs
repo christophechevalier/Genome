@@ -1,4 +1,5 @@
 ﻿using Serveur.Applicatifs;
+using Serveur.Entity;
 using System.Threading;
 
 namespace Serveur.Tools
@@ -8,16 +9,8 @@ namespace Serveur.Tools
         RepertoireTraitement rep = new RepertoireTraitement();
         delegate void ModuleAction(string s);
         ModuleAction mod;
-        public enum Job
-        {
-            AnalyseQuantitative,
-            RechercherSequence,
-            TransformerSequence,
-            TrouverGene,
-            PredireYeux
-        };
 
-        public void traitement(int taille, string args, Job y)
+        public void traitement(string args, Job y)
         {
             switch (y)
             {

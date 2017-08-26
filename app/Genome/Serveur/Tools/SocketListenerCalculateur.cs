@@ -1,13 +1,8 @@
 ﻿using Serveur.Systems;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Serveur.Tools
 {
@@ -18,13 +13,13 @@ namespace Serveur.Tools
         IPEndPoint end;
         Socket sock;
         SystemCalculateur system;
-        ReadAndInterpretMessage interpretMessage;
+        InterpretMessageCalculateur interpretMessage;
 
         public SocketListenerCalculateur(SystemCalculateur system)
         {
             this.serializer = new ObjectSerializer();
             this.system = system;
-            this.interpretMessage = new ReadAndInterpretMessage(system);
+            this.interpretMessage = new InterpretMessageCalculateur(system);
         }
 
         public void startListening()
