@@ -2,8 +2,11 @@
 using Serveur.Systems;
 using System.Collections.Generic;
 using System.IO;
+<<<<<<< 7a8394ff800d502661b6197d672d128eb2b67d44
 using System.Text;
 using System.Threading;
+=======
+>>>>>>> Correction du binding et ajustement d'envois de messages
 
 namespace Serveur.Tools
 {

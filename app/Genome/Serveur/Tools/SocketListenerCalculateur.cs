@@ -1,6 +1,9 @@
 ﻿using Serveur.Entity;
 using Serveur.Systems;
+<<<<<<< 7a8394ff800d502661b6197d672d128eb2b67d44
 using Serveur.View_Ctrl;
+=======
+>>>>>>> Correction du binding et ajustement d'envois de messages
 using System;
 using System.Net;
 using System.Net.Sockets;
