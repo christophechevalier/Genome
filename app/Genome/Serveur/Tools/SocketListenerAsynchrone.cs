@@ -89,6 +89,23 @@ namespace Serveur.View_Ctrl
                 Console.WriteLine(e.ToString());
             }
         }
+        private void Receive(Socket client)
+        {
+            try
+            {
+                // Create the state object.
+                StateObject state = new StateObject();
+                state.workSocket = client;
+
+                // Begin receiving the data from the remote device.
+                client.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
+                    new AsyncCallback(ReadCallback), state);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+        }
 
         public void ReadCallback(IAsyncResult ar)
         {
