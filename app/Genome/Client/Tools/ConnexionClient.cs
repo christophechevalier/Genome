@@ -66,7 +66,7 @@ namespace Client.Tools
         void CheckFileIntegrity(string fileName)
         {
             string[] lines = File.ReadAllLines(fileName);
-            for (int i = 1; i != lines.Length - 1; i++)
+            for (int i = 0; i != lines.Length - 1; i++)
             {
                 string[] value = lines[i].Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
                 char[] letters = value[3].ToCharArray();
@@ -145,7 +145,7 @@ namespace Client.Tools
 
             // Fermeture de la connexion
             message = "Disconnecting ...";
-            clientSocket.Close();
+            //clientSocket.Close();
             message = "File transfered";
         }
 

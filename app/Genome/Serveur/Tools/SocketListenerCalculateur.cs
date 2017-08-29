@@ -57,12 +57,12 @@ namespace Serveur.Tools
                     {
                         client.Receive(clientData);
                     }
-                    //int receiveByteLength = 
+                    int receiveByteLength = 
                     Console.WriteLine("Message received");
                     chunk = (ChunkData) serializer.Deserialize<ChunkData>(clientData);
                     interpretMessage.RetrieveMessage(chunk);
                     */
-                    }
+                }
                 catch (Exception e)
                 {
                     Console.WriteLine("ERROR : " + e);

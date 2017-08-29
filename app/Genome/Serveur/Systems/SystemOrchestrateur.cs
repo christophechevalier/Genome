@@ -149,8 +149,8 @@ namespace Serveur.Systems
         {
             // Démarrage du serveur
             StartServer();
-            while (true)
-            {
+            //while (true)
+            //{
                 try
                 {
                     // Création de l'objet serialiseur
@@ -182,12 +182,13 @@ namespace Serveur.Systems
                     MapReducer reducer = new MapReducer(fileName, this);
                     // Récupération du chunk demandé sous forme de liste
                     //List<string> chunk = reducer.CreateChunk();
+                    //break;
                 }
                 catch(Exception e)
                 {
                     Console.WriteLine("ERROR : " + e);
                 }
-            }
+            //}
         }
     }
 }

@@ -64,7 +64,7 @@
     <Compile Include="Framework\IReducer.cs" />
     <Compile Include="Framework\ISerializer.cs" />
     <Compile Include="Model\GenesMapper.cs" />
-    <Compile Include="StateObject.cs" />
+    <Compile Include="Entity\StateObject.cs" />
     <Compile Include="Systems\SystemCalculateur.cs" />
     <Compile Include="Systems\SystemOrchestrateur.cs" />
     <Compile Include="Tools\GetLocalAddress.cs" />

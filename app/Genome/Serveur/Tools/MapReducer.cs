@@ -18,7 +18,7 @@ namespace Serveur.Tools
         {
             this.file = file;
             this.systemOrch = systemOrch;
-            while (index < 999)
+            while (index < 3)
             {
                 CreateChunk();
                 Thread.Sleep(250);
@@ -30,7 +30,7 @@ namespace Serveur.Tools
             List<string> chunk = new List<string>();
             string[] lines = File.ReadAllLines(file);
             int numberMaxLine = lines.Length;
-            int chunkPart = numberMaxLine / 1000;
+            int chunkPart = numberMaxLine / 4;
             int chunkState = chunkPart * index;
             for (int i = chunkState; i <= chunkState + chunkPart; i++)
             {
